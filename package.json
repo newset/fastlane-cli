@@ -1,0 +1,34 @@
+{
+  "name": "fastlane-cli",
+  "version": "0.0.1",
+  "description": "#### 初始化项目",
+  "main": "lib/index.js",
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "fl": "./lib/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.aihaisi.com:qiexr/public-group/fastlane-cli.git"
+  },
+  "file": [
+    "lib"
+  ],
+  "author": "luojie",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.0.12",
+    "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "args": "^5.0.1",
+    "fs-extra": "^9.0.1",
+    "glob": "^7.1.6",
+    "lodash": "^4.17.15",
+    "ora": "^4.0.4"
+  }
+}
