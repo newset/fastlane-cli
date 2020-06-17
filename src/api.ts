@@ -1,6 +1,5 @@
 export const types = [
-    'weapp',
-    'h5',
+    'hybrid',
     'admin',
     'node',
     // 'full',
@@ -12,8 +11,7 @@ export const git = "https://git.doctorwork.com/qiexr/public-group/templates";
 const ssh = "gitlab.aihaisi.com:qiexr/public-group/templates"
 
 export const templates = {
-    'h5': "mobile-native",
-    'weapp': "mobile-native",
+    'hybrid': "mobile-native",
     'admin': "umi-dash",
     'node': "nodejs",
 }

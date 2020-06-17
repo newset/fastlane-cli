@@ -53,7 +53,9 @@ async function getTemplate(type: number,) {
 }
 
 export async function run(context: any) {
-    const dir = await load(getTemplate(context.type), '下载模板', "下载完成");
+    ora().start().info(`开始创建${types[context.type]}项目`);
+
+    const dir = await load(getTemplate(context.type), '下载模板', "模板下载完成");
 
     const files: [string] = glob.sync("./**", {
         cwd: dir,
