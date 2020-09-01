@@ -1,4 +1,4 @@
-import { getTemplateUrl, types } from "./api";
+import { getTemplateUrl, types } from "../api";
 const ora = require('ora');
 const template = require("lodash/template");
 
