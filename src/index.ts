@@ -10,9 +10,13 @@ type Yargs = any;
 
 var argv = cli
     .command(
-        'create [name]',
+        'create <name>',
         'create project',
         (yargs: Yargs) => {
+            yargs.positional('name', {
+                describe: 'Project Name',
+                type: 'string',
+            })
             return yargs.options({
                 'apiPrefix': {
                     alias: "a"
@@ -25,8 +29,15 @@ var argv = cli
             create(argv);
         }
     )
-    .command("subpackage [name]", "add subpackage", (yargs) => {
-
+    .command("subpackage <name> [dest]", "安装subpackage", (yargs) => {
+        yargs.positional('name', {
+            describe: 'Subpackage在仓库中的包名',
+            type: 'string',
+        }).positional('dest', {
+            describe: '包输出的位置，默认为package目录',
+            type: 'string',
+            default: 'package'
+        })
     }, (argv) => {
         subpackage(argv);
     })

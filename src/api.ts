@@ -1,27 +1,17 @@
-export const types = [
-    'hybrid',
-    'admin',
-    'node',
-    // 'full',
-    // 'ssr'，
-    // 'doc'，
-]
+
 
 export const git = "https://git.doctorwork.com/qiexr/public-group/templates";
-const ssh = "gitlab.aihaisi.com:qiexr/public-group/templates"
+// const ssh = "gitlab.aihaisi.com:qiexr/public-group/templates"
+const ssh = "git@gitlab.aihaisi.com:qiexr/public-group"
 
-export const templates = {
-    'hybrid': "mobile-native",
-    'admin': "umi-dash",
-    'node': "nodejs",
+
+const handleType: { [key: string]: string } = {
+    create: 'templates',
+    subpackage: 'subpackage'
 }
 
-export type ProjectType = typeof templates;
 
-type TempType = keyof ProjectType;
-
-export const getTemplateUrl = (type: number) => {
-    const name = types[type] as TempType;
-    // return `${git}/-/archive/master/${templates[name]}-master.zip`;
-    return `${ssh}/${templates[name]}`
+export const getTemplateUrl = (name: string, handle: string) => {
+    const type = handleType[handle]
+    return `${ssh}/${type}/${name}.git`
 };
