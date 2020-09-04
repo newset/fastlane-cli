@@ -3,6 +3,34 @@ import { Arguments } from "yargs"
 const ora = require('ora');
 const glob = require("glob");
 
+export const types = [
+    'hybrid',
+    'admin',
+    'node',
+    // 'full',
+    // 'ssr'，
+    // 'doc'，
+]
+
+export const git = "https://git.doctorwork.com/qiexr/public-group/templates";
+const ssh = "gitlab.aihaisi.com:qiexr/public-group/templates"
+
+export const templates = {
+    'hybrid': "mobile-native",
+    'admin': "umi-dash",
+    'node': "nodejs",
+}
+
+export type ProjectType = typeof templates;
+
+type TempType = keyof ProjectType;
+
+export const getTemplateUrl = (type: number) => {
+    const name = types[type] as TempType;
+    // return `${git}/-/archive/master/${templates[name]}-master.zip`;
+    return `${ssh}/${templates[name]}`
+};
+
 export default (args: Arguments) => {
 
     console.log("object", args);
@@ -10,10 +38,9 @@ export default (args: Arguments) => {
 }
 
 async function run(context: any) {
-    const { _: [handleType], name } = context
-    ora().start().info(`开始创建${name}项目`);
+    ora().start().info(`开始创建${types[context.type]}项目`);
 
-    const dir = await load(getTemplate(name, handleType), '下载模板', "模板下载完成");
+    const dir = await load(getTemplate(context.type), '下载模板', "模板下载完成");
 
     const files: [string] = glob.sync("./**", {
         cwd: dir,
