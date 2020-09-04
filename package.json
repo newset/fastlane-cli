@@ -51,7 +51,10 @@
       "extensions": [
         "ts",
         "tsx"
-      ]
+      ],
+      "rewritePaths": {
+        "src/": "lib/"
+      }
     }
   },
   "lint-staged": {
