@@ -5,6 +5,7 @@
 // changelog
 // eslint
 // script 添加 "version": "standard-version"
+import { Argv, Arguments } from "yargs";
 const ora = require("ora");
 
 // deps:
@@ -79,14 +80,15 @@ const fs = require("fs-extra");
 
 import { exec } from "child_process";
 
-interface LintCommandOptions {
-  type: "react" | "vue";
-  eslint: boolean;
-}
+type CommandArg = Arguments & {
+  type?: "react" | "vue";
+  eslint?: boolean;
+};
 
-export default async (opts: LintCommandOptions) => {
+export const handler = async (opts: CommandArg) => {
   const spinner = ora("添加 依赖").start();
-  const { type } = opts;
+  // const { type } = opts;
+  const type = "react";
   const install = `yarn add ${Object.keys(deps).join(" ")} -D`;
   await new Promise((resolve) =>
     exec(install, (_err, stdout) => resolve(stdout))
@@ -115,3 +117,22 @@ export default async (opts: LintCommandOptions) => {
   fs.writeFile("./package.json", JSON.stringify(pkg, null, "  "));
   spinner.stop();
 };
+
+export const builder = (yargs: Argv) => {
+  return yargs
+    .positional("type", {
+      default: "react",
+      choices: ["react", "vue"],
+    })
+    .options({
+      eslint: {
+        describe: "关闭eslint",
+        default: true,
+        type: "boolean",
+      },
+    });
+};
+
+export const command = "lint";
+
+export const desc = "添加Lint 设置";
