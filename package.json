@@ -32,5 +32,20 @@
     "lodash": "^4.17.15",
     "ora": "^4.0.4",
     "yargs": "^15.4.1"
+  },
+  "hooks": {
+    "pre-commit": "lint-staged",
+    "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "prettier": {
+    "tabWidth": 2
   }
 }
