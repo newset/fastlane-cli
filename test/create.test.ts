@@ -2,13 +2,13 @@ const { getTemplateUrl } = require("../lib/api");
 const test = require("ava");
 
 const presets = [
-  "https://git.doctorwork.com/qiexr/public-group/templates/hybrid",
-  "https://git.doctorwork.com/qiexr/public-group/templates/admin",
-  "https://git.doctorwork.com/qiexr/public-group/templates/node",
+  "gitlab.aihaisi.com:qiexr/public-group/templates/hybrid.git",
+  "gitlab.aihaisi.com:qiexr/public-group/templates/admin.git",
+  "gitlab.aihaisi.com:qiexr/public-group/templates/node.git",
 ];
 
 const subs = {
-  sso: "git@gitlab.aihaisi.com:qiexr/public-group/subpackage/sso",
+  sso: "gitlab.aihaisi.com:qiexr/public-group/subpackage/sso.git",
 };
 
 // fl create temp --type=0
@@ -16,9 +16,9 @@ const subs = {
 // fl create temp --type=dash
 // fl create temp --type=node
 test("测试create命令返回的仓库地址", async (t) => {
-  const mobielURL = getTemplateUrl("create", 0);
-  const nodeURL = getTemplateUrl("create", 2);
-  const nodeNameURL = getTemplateUrl("create", "node");
+  const mobielURL = getTemplateUrl(0, "create");
+  const nodeURL = getTemplateUrl(2, "create");
+  const nodeNameURL = getTemplateUrl("node", "create");
 
   t.is(mobielURL, presets[0]);
   t.is(nodeURL, presets[2]);
@@ -28,6 +28,6 @@ test("测试create命令返回的仓库地址", async (t) => {
 
 // fl subpackage sso
 test("测试subpackage命令返回的仓库地址", async (t) => {
-  const subUrl = getTemplateUrl("subpackage", "sso");
+  const subUrl = getTemplateUrl("sso", "subpackage");
   t.is(subUrl, subs.sso);
 });

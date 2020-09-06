@@ -3,6 +3,10 @@ import { Argv } from "yargs";
 const ora = require("ora");
 const glob = require("glob");
 
+type Context = Argv & {
+  type?: string;
+};
+
 export const builder = (yargs: Argv) => {
   return yargs
     .positional("name", {
@@ -23,12 +27,12 @@ export const builder = (yargs: Argv) => {
     });
 };
 
-export async function handler(context: Argv) {
-  const { name } = context;
+export async function handler(context: Context) {
+  const { name, type } = context;
   ora().start().info(`开始创建${name}项目`);
 
   const dir = await load(
-    getTemplate(name, "create"),
+    getTemplate(name, type, "create"),
     "下载模板",
     "模板下载完成"
   );
