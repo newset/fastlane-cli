@@ -18,7 +18,7 @@ const subs = {
 test("测试create命令返回的仓库地址", async (t) => {
   const mobielURL = getTemplateUrl(0, "create");
   const nodeURL = getTemplateUrl(2, "create");
-  const nodeNameURL = getTemplateUrl("node", "create");
+  const nodeNameURL = getTemplateUrl("nodejs", "create");
 
   t.is(mobielURL, presets[0]);
   t.is(nodeURL, presets[2]);

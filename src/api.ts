@@ -1,7 +1,7 @@
 export const types = [
   "hybrid",
   "admin",
-  "node",
+  "nodejs",
   // 'full',
   // 'ssr'，
   // 'doc'，
@@ -22,7 +22,7 @@ const handleMap: ProjectMap = {
 export const templates: ProjectMap = {
   hybrid: "hybrid",
   admin: "admin",
-  node: "nodejs",
+  nodejs: "nodejs",
 };
 
 export type ProjectType = typeof templates;
