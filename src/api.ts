@@ -20,8 +20,8 @@ const handleMap: ProjectMap = {
 };
 
 export const templates: ProjectMap = {
-  hybrid: "mobile-native",
-  admin: "umi-dash",
+  hybrid: "hybrid",
+  admin: "admin",
   node: "nodejs",
 };
 
@@ -30,7 +30,9 @@ export type ProjectType = typeof templates;
 type TempType = keyof ProjectType;
 
 export const getTemplateUrl = (type: number | string, handle: string) => {
-  const name: string = typeof type === "number" ? types[type] : type;
+  // 取项目name待优化
+  const key: string = typeof type === "number" ? types[type] : type;
+  const name: string = handle === "create" ? templates[key] : key;
   const subpath = handleMap[handle];
 
   return `${ssh}/${subpath}/${name}.git`;

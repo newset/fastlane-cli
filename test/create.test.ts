@@ -4,7 +4,7 @@ const test = require("ava");
 const presets = [
   "gitlab.aihaisi.com:qiexr/public-group/templates/hybrid.git",
   "gitlab.aihaisi.com:qiexr/public-group/templates/admin.git",
-  "gitlab.aihaisi.com:qiexr/public-group/templates/node.git",
+  "gitlab.aihaisi.com:qiexr/public-group/templates/nodejs.git",
 ];
 
 const subs = {
