@@ -19,20 +19,9 @@ const handleMap: ProjectMap = {
   subpackage: "subpackage",
 };
 
-export const templates: ProjectMap = {
-  hybrid: "hybrid",
-  admin: "admin",
-  nodejs: "nodejs",
-};
-
-export type ProjectType = typeof templates;
-
-type TempType = keyof ProjectType;
-
 export const getTemplateUrl = (type: number | string, handle: string) => {
-  // 取项目name待优化
-  const key: string = typeof type === "number" ? types[type] : type;
-  const name: string = handle === "create" ? templates[key] : key;
+  // create的老用法 0 1 2有映射，其他用string直接取名字
+  const name: string = typeof type === "number" ? types[type] : type;
   const subpath = handleMap[handle];
 
   return `${ssh}/${subpath}/${name}.git`;

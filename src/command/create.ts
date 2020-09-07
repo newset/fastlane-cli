@@ -16,7 +16,7 @@ export const builder = (yargs: Argv) => {
       type: {
         choices: [0, 1, 2, "hybrid", "admin", "nodejs", "cli"],
         alias: "t",
-        description: "0-hybrid, 1-admin, 2-node, cli",
+        description: "0-hybrid, 1-admin, 2-nodejs, cli",
       },
       apiPrefix: {
         alias: "a",
