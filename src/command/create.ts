@@ -1,13 +1,15 @@
 import { load, writeFile, getTemplate } from "../utils";
-import { Argv } from "yargs";
+import { Argv, CommandBuilder } from "yargs";
 const ora = require("ora");
 const glob = require("glob");
+
+type deprecateOption = (key: string, mssage: string) => void;
 
 type Context = Argv & {
   type?: string;
 };
 
-export const builder = (yargs: Argv) => {
+export const builder = (yargs: Context) => {
   return yargs
     .positional("name", {
       description: "项目名称",
@@ -19,10 +21,10 @@ export const builder = (yargs: Argv) => {
         description: "0-hybrid, 1-admin, 2-nodejs, cli",
       },
       apiPrefix: {
-        alias: "a",
+        description: "接口前缀",
       },
       dist: {
-        alias: "d",
+        description: "构建目录",
       },
     });
 };
@@ -64,3 +66,8 @@ export async function handler(context: Context) {
 export const command = "create <name>";
 
 export const desc = "创建项目";
+
+export const deprecateOption = [
+  "type",
+  "0, 1, 2 将在下个版本去除，请使用hybrid, admin ,nodejs",
+];

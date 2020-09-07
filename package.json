@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsc -w",
     "build": "tsc",
-    "test": "ava",
+    "test": "ava -v",
     "version": "standard-version",
     "prettify": "prettier --write"
   },

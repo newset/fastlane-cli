@@ -1,5 +1,7 @@
 const { getTemplateUrl } = require("../lib/api");
+const yargs = require("yargs");
 const test = require("ava");
+const create = require("../lib/command/create");
 
 const presets = [
   "gitlab.aihaisi.com:qiexr/public-group/templates/hybrid.git",
@@ -30,4 +32,25 @@ test("测试create命令返回的仓库地址", async (t) => {
 test("测试subpackage命令返回的仓库地址", async (t) => {
   const subUrl = getTemplateUrl("sso", "subpackage");
   t.is(subUrl, subs.sso);
+});
+
+test("create参数检查", async (t) => {
+  const command = () => {
+    return yargs.command(create.command, create.desc, create.builder);
+  };
+
+  t.throws(
+    () => {
+      command().parse("create test --type=err", {}, (err) => {
+        if (err) {
+          throw new TypeError("🦄");
+        }
+      });
+    },
+    { instanceOf: TypeError }
+  );
+
+  t.notThrows(() => {
+    command().parse("create test --type=nodejs");
+  });
 });
