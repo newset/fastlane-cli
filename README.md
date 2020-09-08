@@ -19,7 +19,7 @@ fl create [name] --type=0 --apiPrefix=/sso-auth --dist=/rapp/sso-auth
 | 0 \| hybrid | hybrid | [mobile-native](https://git.doctorwork.com/qiexr/public-group/templates/mobile-native) | 多端通用       |
 | 1 \| admin  | admin  | [umi-dash](https://git.doctorwork.com/qiexr/public-group/templates/umi-dash)           | 专注管理后模板 |
 | 2 \| node   | node   | [nodejs](https://git.doctorwork.com/qiexr/public-group/templates/nodejs)               | Node 端模板    |
-| cli         | cli    | [nodejs](https://git.doctorwork.com/qiexr/public-group/templates/cli)                  | 命令行 模板    |
+| cli         | cli    | [cli](https://git.doctorwork.com/qiexr/public-group/templates/cli)                     | 命令行 模板    |
 
 > dist
 
