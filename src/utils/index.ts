@@ -1,8 +1,7 @@
-import { getTemplateUrl, types } from "../api";
+import { getTemplateUrl, TemplateType } from "../api";
 const ora = require("ora");
 const template = require("lodash/template");
 
-const glob = require("glob");
 const fs = require("fs");
 const fse = require("fs-extra");
 const path = require("path");
@@ -13,7 +12,6 @@ interface WriterOptions {
   dir: string;
 }
 
-const reg = new RegExp("^./template");
 const cwd = path.resolve(__dirname, "..");
 
 export const load = (promise: any, title: string, done?: string) => {
@@ -45,11 +43,7 @@ export function writeFile(file: string, opts: WriterOptions) {
   fse.outputFile(reservedPath(dest, file), compiled);
 }
 
-export async function getTemplate(
-  name: string,
-  type: number | string,
-  handle: string
-) {
+export async function getTemplate(type: number | string, handle: TemplateType) {
   // 获取模板
   const [source, templateName] = getTemplateUrl(type, handle);
   const tempDir = path.join(cwd, "template", templateName);

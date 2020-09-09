@@ -85,9 +85,8 @@ type CommandArg = Arguments & {
   eslint?: boolean;
 };
 
-export const handler = async (opts: CommandArg) => {
+async function writeConfigFiles() {
   const spinner = ora("添加 依赖").start();
-  // const { type } = opts;
   const type = "react";
   const install = `yarn add ${Object.keys(deps).join(" ")} -D`;
   await new Promise((resolve) =>
@@ -100,6 +99,11 @@ export const handler = async (opts: CommandArg) => {
   spinner.succeed("写入 eslint");
   // 写入 eslint
   fs.writeFile("./.eslintrc.js", Buffer.from(eslint[type]));
+}
+
+async function udpatePackageJson() {
+  const spinner = ora("添加 依赖").start();
+  // const { type } = opts;
 
   spinner.succeed("更新 package.json");
   const pkg = require(process.cwd() + "/package.json");
@@ -116,6 +120,11 @@ export const handler = async (opts: CommandArg) => {
   });
   fs.writeFile("./package.json", JSON.stringify(pkg, null, "  "));
   spinner.stop();
+}
+
+export const handler = async (opts: CommandArg) => {
+  await writeConfigFiles();
+  await udpatePackageJson();
 };
 
 export const builder = (yargs: Argv) => {

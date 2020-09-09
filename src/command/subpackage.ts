@@ -1,7 +1,6 @@
 import { Argv } from "yargs";
-import { getTemplateUrl } from "../api";
+import { getTemplate } from "../utils";
 
-import cp from "child_process";
 const fs = require("fs-extra");
 const path = require("path");
 const ora = require("ora");
@@ -11,6 +10,7 @@ import { load } from "../utils";
 type Context = Argv & {
   name?: string;
   dist?: string;
+  force?: boolean;
 };
 
 export const builder = (yargs: Argv) => {
@@ -19,6 +19,12 @@ export const builder = (yargs: Argv) => {
       description: "子包名称",
     })
     .options({
+      force: {
+        description: "是否覆盖安装",
+        alias: "f",
+        default: false,
+        type: "boolean",
+      },
       dist: {
         describe: "包输出的位置，默认为package目录",
         alias: "d",
@@ -30,29 +36,22 @@ export const builder = (yargs: Argv) => {
 const cwd = process.cwd();
 
 export async function handler(context: Context) {
-  const { name, dist } = context;
+  const { name, dist, force } = context;
   ora().start().info(`开始安装${name}插件`);
 
-  const tempDir = path.join(cwd, name);
-
   const destination = path.join(cwd, dist, name);
-  await load(getSubpackage(name), "下载插件", "插件下载完毕");
+  const tempDir = await load(
+    getTemplate(name, "subpackage"),
+    "下载插件",
+    "插件下载完毕"
+  );
 
-  await movePackage(tempDir, destination);
+  // 检查目录是否存在
+  if (fs.existsSync(destination) && !force)
+    return console.log("目录以存在，如果需要覆盖，添加-f 参数");
+
+  await fs.move(tempDir, destination, { overwrite: true });
 }
-
-const getSubpackage = async (name: string) => {
-  const [url] = getTemplateUrl(name, "subpackage");
-  await new Promise((resolve) => {
-    const command = `git clone git@${url} --depth 1`;
-    cp.exec(command, {}, (error: Error) =>
-      error ? console.log(error) : resolve()
-    );
-  });
-};
-
-const movePackage = (tempDir: string, destination: string) =>
-  fs.move(tempDir, destination);
 
 export const command = "subpackage <name>";
 

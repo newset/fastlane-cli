@@ -1,5 +1,5 @@
 import { load, writeFile, getTemplate } from "../utils";
-import { Argv, CommandBuilder } from "yargs";
+import { Argv } from "yargs";
 const ora = require("ora");
 const glob = require("glob");
 
@@ -34,7 +34,7 @@ export async function handler(context: Context) {
   ora().start().info(`开始创建${name}项目`);
 
   const dir = await load(
-    getTemplate(name, type, "create"),
+    getTemplate(type, "create"),
     "下载模板",
     "模板下载完成"
   );
