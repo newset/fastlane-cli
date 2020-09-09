@@ -1,17 +1,10 @@
-export const types = [
-  "hybrid",
-  "admin",
-  "nodejs",
-  // 'full',
-  // 'ssr'，
-  // 'doc'，
-];
+export const types = ["hybrid", "admin", "nodejs"];
 
 export const git = "https://git.doctorwork.com/qiexr/public-group";
 const ssh = "gitlab.aihaisi.com:qiexr/public-group";
 
 interface ProjectMap {
-  [key: string]: string;
+  [key: string]: string | number;
 }
 
 const handleMap: ProjectMap = {
@@ -24,5 +17,5 @@ export const getTemplateUrl = (type: number | string, handle: string) => {
   const name: string = typeof type === "number" ? types[type] : type;
   const subpath = handleMap[handle];
 
-  return `${ssh}/${subpath}/${name}.git`;
+  return [`${ssh}/${subpath}/${name}.git`, name];
 };

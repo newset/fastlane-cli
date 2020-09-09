@@ -42,15 +42,13 @@ export async function handler(context: Context) {
 }
 
 const getSubpackage = async (name: string) => {
-  const url = getTemplateUrl(name, "subpackage");
+  const [url] = getTemplateUrl(name, "subpackage");
   await new Promise((resolve) => {
     const command = `git clone git@${url} --depth 1`;
-    // 删除.git
     cp.exec(command, {}, (error: Error) =>
       error ? console.log(error) : resolve()
     );
   });
-  await fs.remove(`./${name}/.git`);
 };
 
 const movePackage = (tempDir: string, destination: string) =>

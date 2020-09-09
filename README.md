@@ -67,3 +67,9 @@ fl subpackage sso
 ```
 fl lint
 ```
+
+## 初始化开发环境 Boot
+
+- 安装 homebrew
+- 安装 oh-my-zsh
+- 配置 .zshrc

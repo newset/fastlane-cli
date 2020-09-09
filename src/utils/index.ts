@@ -25,17 +25,24 @@ export const load = (promise: any, title: string, done?: string) => {
   });
 };
 
+function reservedPath(dir: string, file: string) {
+  return path.join(dir, file);
+}
+
 export function writeFile(file: string, opts: WriterOptions) {
   const { filter, context, dir } = opts;
   // 写入新文件
   const dest = `./${context.name}`;
   const original = fs.readFileSync(path.resolve(dir, file)).toString();
-  const compiled = template(original, {
-    variable: "data",
-    interpolate: /<%=([\s\S]+?)%>/g,
-  })(context);
+  let compiled = original;
+  if (file.match(/(js|ts|jsx|tsx|json|html|yaml|yml)$/)) {
+    compiled = template(original, {
+      variable: "data",
+      interpolate: /<%=([\s\S]+?)%>/g,
+    })(context);
+  }
 
-  fse.outputFile(path.join(dest, file), compiled);
+  fse.outputFile(reservedPath(dest, file), compiled);
 }
 
 export async function getTemplate(
@@ -44,8 +51,7 @@ export async function getTemplate(
   handle: string
 ) {
   // 获取模板
-  const source = getTemplateUrl(type, handle);
-  const templateName = name;
+  const [source, templateName] = getTemplateUrl(type, handle);
   const tempDir = path.join(cwd, "template", templateName);
 
   fse.removeSync(tempDir);
@@ -56,7 +62,5 @@ export async function getTemplate(
       !err ? resolve() : console.log(err)
     );
   });
-  // 删除.git
-  fse.removeSync(path.join(tempDir, ".git"));
-  return tempDir;
+  return path.join(tempDir, "template");
 }
