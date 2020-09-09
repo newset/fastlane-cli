@@ -5,15 +5,10 @@
     "target": "es6",
     "noImplicitAny": true,
     "moduleResolution": "node",
-    "sourceMap": true,
     "outDir": "lib/",
     "rootDir": "src",
-    "resolveJsonModule": true,
+    "resolveJsonModule": true
   },
-  "include": [
-    "src/", "typings/**/*"
-  ],
-  "lib": [
-    "es2015"
-  ]
+  "include": ["src/", "typings/indx.d.ts"],
+  "lib": ["es2015"]
 }

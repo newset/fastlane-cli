@@ -1,27 +1,23 @@
-export const types = [
-    'hybrid',
-    'admin',
-    'node',
-    // 'full',
-    // 'ssr'，
-    // 'doc'，
-]
+export const types = ["hybrid", "admin", "nodejs"];
 
-export const git = "https://git.doctorwork.com/qiexr/public-group/templates";
-const ssh = "gitlab.aihaisi.com:qiexr/public-group/templates"
+export const git = "https://git.doctorwork.com/qiexr/public-group";
+const ssh = "gitlab.aihaisi.com:qiexr/public-group";
 
-export const templates = {
-    'hybrid': "mobile-native",
-    'admin': "umi-dash",
-    'node': "nodejs",
+interface ProjectMap {
+  [key: string]: string | number;
 }
 
-export type ProjectType = typeof templates;
+const handleMap: ProjectMap = {
+  create: "templates",
+  subpackage: "subpackage",
+};
 
-type TempType = keyof ProjectType;
+export type TemplateType = "create" | "subpackage";
 
-export const getTemplateUrl = (type: number) => {
-    const name = types[type] as TempType;
-    // return `${git}/-/archive/master/${templates[name]}-master.zip`;
-    return `${ssh}/${templates[name]}`
+export const getTemplateUrl = (type: number | string, handle: TemplateType) => {
+  // create的老用法 0 1 2有映射，其他用string直接取名字
+  const name: string = typeof type === "number" ? types[type] : type;
+  const subpath = handleMap[handle];
+
+  return [`${ssh}/${subpath}/${name}.git`, name];
 };
