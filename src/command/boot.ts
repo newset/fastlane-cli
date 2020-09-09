@@ -4,10 +4,10 @@
 
 import yargs, { Argv } from "yargs";
 const ora = require("ora");
-const promisify = require("util").promisify;
 const path = require("path");
-const exec = promisify(require("child_process").exec);
 const execSync = require("child_process").execSync;
+const fs = require("fs-extra");
+const home = process.env.HOME;
 
 const { spawn } = require("../utils/shell");
 
@@ -45,14 +45,7 @@ export const brew = async (force = false) => {
   await spawn("./shell/brew.sh");
 };
 
-export const zsh = async function () {
-  const fs = require("fs-extra");
-  const home = process.env.HOME;
-  // 检查 目录
-  if (!fs.existsSync(path.join(home, ".oh-my-zsh"))) {
-    // 安装 oh-my-zsh
-    await spawn("./shell/zsh.sh");
-  }
+async function updateZshrc() {
   // 编辑 .zshrc
   const plugins = "git z sublime zsh-autosuggestions vscode zsh_reload colored-man-pages zsh-syntax-highlighting sudo".split(
     " "
@@ -75,6 +68,16 @@ export const zsh = async function () {
     "\nplugins=(" + merged.join("\n\t") + "\n"
   );
   fs.writeFile(zshrc, Buffer.from(modified));
+}
+
+export const zsh = async function () {
+  // 检查 目录
+  if (!fs.existsSync(path.join(home, ".oh-my-zsh"))) {
+    // 安装 oh-my-zsh
+    await spawn("./shell/zsh.sh");
+  }
+
+  await updateZshrc();
 };
 
 type CommandArg = {
