@@ -33,7 +33,7 @@ export function writeFile(file: string, opts: WriterOptions) {
   const dest = `./${context.name}`;
   const original = fs.readFileSync(path.resolve(dir, file)).toString();
   let compiled = original;
-  if (file.match(/(js|ts|jsx|tsx|json|html|yaml|yml)$/)) {
+  if (file.match(/(js|ts|jsx|tsx|json|html|yaml|yml.sh)$/)) {
     compiled = template(original, {
       variable: "data",
       interpolate: /<%=([\s\S]+?)%>/g,

@@ -9,6 +9,6 @@
     "rootDir": "src",
     "resolveJsonModule": true
   },
-  "include": ["src/", "typings/indx.d.ts"],
+  "include": ["src", "typings"],
   "lib": ["es2015"]
 }

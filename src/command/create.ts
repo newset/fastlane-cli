@@ -60,7 +60,6 @@ export async function handler(context: Context) {
   }
 
   spinner.stop();
-  console.log("完成");
 }
 
 export const command = "create <name>";
