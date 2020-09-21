@@ -15,7 +15,9 @@ nvm install node
 npm i fastlane-cli -g
 ```
 
-## 初始化项目
+## 功能
+
+### 创建项目
 
 ```
 fl create [name] --type=0 --apiPrefix=/sso-auth --dist=/rapp/sso-auth
@@ -38,7 +40,7 @@ fl create [name] --type=0 --apiPrefix=/sso-auth --dist=/rapp/sso-auth
 
 项目主要 api 的名称
 
-## 模板规范
+#### 模板规范
 
 以 Hybrid 模板为例:
 
@@ -58,15 +60,7 @@ const api = (url: String) => `<%= data.apiPrefix %>${url}`;
 
 更多语法支持，参考 [Lodash/template](https://lodash.com/docs/4.17.15#template) 文档， [中文文档地址](https://www.lodashjs.com/docs/latest#_templatestring-options)
 
-## 添加子包
-
-- 下载子包到 package 目录
-
-```
-fl subpackage sso
-```
-
-## 添加 Lint
+### 添加 Lint
 
 - 添加 husky, lint, changelog 相关依赖
 - 添加 commitlint 配置
@@ -77,8 +71,27 @@ fl subpackage sso
 fl lint
 ```
 
-## 初始化开发环境 Boot
+### 初始化开发环境 Boot
 
 - 安装 homebrew
 - 安装 oh-my-zsh
 - 配置 .zshrc
+
+### 小程序工具
+
+- 发布版本 release
+- 添加子包 add
+
+### 工具集 Tool
+
+```
+export `fl tool cos | xargs `
+```
+
+- 获取 cos token
+
+## 开发
+
+```
+yarn global add "file:$(pwd)/"
+```

@@ -71,7 +71,7 @@ const eslint = {
 
 // 添加 开发相关 script
 const scripts = {
-  version: "standard-version",
+  release: "standard-version",
   prettify: "prettier --write",
 };
 

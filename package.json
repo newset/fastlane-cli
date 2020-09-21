@@ -5,8 +5,9 @@
   "main": "lib/index.js",
   "scripts": {
     "dev": "tsc -w",
-    "build": "tsc",
+    "build": "rm -rf lib && tsc",
     "test": "ava -v",
+    "prepublishOnly": "npm run build",
     "version": "standard-version",
     "prettify": "prettier --write"
   },
@@ -41,6 +42,7 @@
     "glob": "^7.1.6",
     "inquirer": "^7.3.3",
     "lodash": "^4.17.15",
+    "miniprogram-ci": "^1.0.79",
     "ora": "^4.0.4",
     "yargs": "^15.4.1"
   },
