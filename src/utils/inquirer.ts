@@ -1,4 +1,5 @@
 const inquirer = require("inquirer");
+const path = require("path");
 
 /**
  * 命令问答模式：问题
@@ -25,7 +26,7 @@ const Questions: any = {
     {
       type: "confirm",
       message: "是否创建到当前目录？",
-      name: "watch",
+      name: "cwd",
       default: () => false,
     },
     {
@@ -33,7 +34,7 @@ const Questions: any = {
       name: "name",
       message: "项目名称",
       default: () => {
-        return "";
+        return path.basename(process.cwd());
       },
       validate: (val: string) => {
         if (!val) {
@@ -42,8 +43,8 @@ const Questions: any = {
         return true;
       },
       when: function (answer: any) {
-        // 当watch为false的时候才会到达这步
-        return !answer.watch;
+        // 当cwe为false的时候才会到达这步
+        return !answer.cwd;
       },
     },
   ],
@@ -60,8 +61,6 @@ const Questions: any = {
  * @param type 问题的类型，放在当前统一配置，如果有需要自行修改对应的问题
  * @param cb 回调答案{key: 问题的name，value: 对应的值}
  */
-export const projectInput = (type: string, cb: Function) => {
-  inquirer.prompt(Questions[type]).then((answers: any) => {
-    cb(answers);
-  });
+export const projectInput = async (type: string) => {
+  return inquirer.prompt(Questions[type]);
 };
