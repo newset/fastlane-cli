@@ -18,6 +18,7 @@ export const builder = (yargs: Context) => {
       type: {
         choices: [0, 1, 2, "hybrid", "admin", "nodejs", "cli"],
         alias: "t",
+        required: true,
         description: "0-hybrid, 1-admin, 2-nodejs, cli",
       },
       apiPrefix: {
@@ -31,7 +32,9 @@ export const builder = (yargs: Context) => {
 
 export async function handler(context: Context) {
   const { name, type } = context;
-  ora().start().info(`开始创建${name}项目`);
+  ora()
+    .start()
+    .info(`开始创建${name || ""}项目`);
 
   const dir = await load(
     getTemplate(type, "create"),
@@ -68,5 +71,7 @@ export const desc = "创建项目";
 
 export const deprecateOption = [
   "type",
-  "0, 1, 2 将在下个版本去除，请使用hybrid, admin ,nodejs",
+  // "0, 1, 2 将在下个版本去除，请使用hybrid, admin ,nodejs",
+  // 已使用问答模式，可以不需要0，1，2了
+  "请使用hybrid, admin, nodejs, cli",
 ];
