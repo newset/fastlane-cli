@@ -30,7 +30,8 @@ function reservedPath(dir: string, file: string) {
 export function writeFile(file: string, opts: WriterOptions) {
   const { filter, context, dir } = opts;
   // 写入新文件
-  const dest = `./${context.name}`;
+  // 新增兼容当前目录的情况，即name为空
+  const dest = `./${context.name || ""}`;
   const original = fs.readFileSync(path.resolve(dir, file)).toString();
   let compiled = original;
   if (file.match(/(js|ts|jsx|tsx|json|html|yaml|yml)$/)) {
