@@ -21,15 +21,15 @@ interface ArgType {
 }
 
 export const handler = async (args: ArgType) => {
-  const { action, name } = args;
+  const { action, name, desc, version } = args;
   switch (action) {
     case "preview":
-      ci.preview();
+      ci.preview({ desc });
       break;
     case "release":
       await ci.upload({
-        desc: args.desc,
-        version: args.version,
+        desc,
+        version,
       });
       break;
     case "add":

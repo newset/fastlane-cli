@@ -30,7 +30,7 @@ interface ProjectTypes {
 
 type TypeKeys = keyof ProjectTypes;
 
-interface CI_Context {
+interface CIContext {
   publicUrl?: string;
   desc?: string;
   version?: string;
@@ -40,6 +40,15 @@ const setting = {
   es6: false,
   es7: true,
 };
+
+function getCIOptions(context: CIContext) {
+  const { desc } = context;
+  return {
+    desc: `[${process.env.APP_CONFIG_API_ENV || "prod"}]${desc}`,
+    robot: process.env.CI_ROBOT || 30,
+    setting,
+  };
+}
 
 export const start = async () => {
   const configPath = dir("project.config.json");
@@ -66,7 +75,7 @@ export const start = async () => {
   });
 };
 
-export const upload = async (context: CI_Context) => {
+export const upload = async (context: CIContext) => {
   const { desc, version } = context;
   const pkg = await fs.readJson(join(cwd, "package.json"), {
     encoding: "utf-8",
@@ -74,20 +83,21 @@ export const upload = async (context: CI_Context) => {
 
   const project = await start();
   // 根据分支选择 robot
-  await ci.upload({
+  const info = await ci.upload({
     project,
     version: version || pkg.version,
-    desc,
-    setting,
+    ...getCIOptions(context),
   });
+
+  console.log(info);
 };
 
-export const preview = async () => {
+export const preview = async (context: CIContext) => {
   const project = await start();
   // 根据分支选择 robot
   const info = await ci.preview({
     project,
-    setting,
+    ...getCIOptions(context),
   });
 
   console.log(info);
