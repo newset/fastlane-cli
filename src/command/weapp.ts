@@ -10,6 +10,7 @@
 
 import { Argv } from "yargs";
 import scalffold, { PresetType } from "../utils/scaffold";
+import { uploadWeapp } from "../utils/ci";
 
 interface ArgType {
   action: string;
@@ -23,7 +24,10 @@ export const handler = async (args: ArgType) => {
   const { action, name } = args;
   switch (action) {
     case "release":
-      await release(args);
+      await uploadWeapp({
+        desc: args.desc,
+        version: args.version,
+      });
       break;
     case "add":
       const { dest } = args;
@@ -51,25 +55,15 @@ export const builder = (yargs: Argv) => {
       description: "插件名称",
       choices: ["sso"],
     })
-    .option("version", { default: process.env.CI_VERSION })
+    .option("version", { default: process.env.CI_COMMIT_TAG })
     .option("dest", {
       description: "自定义安装目录, 注意斜杠结尾",
       default: "package/",
     })
     .option("desc", {
-      default: process.env.CI_MESSAGE,
+      default: process.env.CI_COMMIT_MESSAGE,
     });
 };
-
-/**
- * 小程序发布功能
- * 1、获取cdn session token
- * 2、使用ci发布版本
- * 3、上传 dist/.asset 目录
- *
- * 命令行参数: --version --desc
- */
-async function release(context: ArgType) {}
 
 export const command = "weapp <action> [name]";
 
