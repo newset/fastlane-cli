@@ -10,3 +10,13 @@ export const spawn = async (file: string) => {
     encoding: "utf-8",
   });
 };
+
+export const exec = async (code: string, opts: any) => {
+  const run = promisify(require("child_process").exec);
+
+  await run(code, {
+    ...opts,
+    stdio: ["pipe", process.stdout, process.stderr],
+    encoding: "utf-8",
+  });
+};

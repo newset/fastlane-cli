@@ -1,24 +1,21 @@
-import { load, writeFile, getTemplate } from "../utils";
 import { projectInput } from "../utils/inquirer";
 import { handler as create } from "./create";
 import { Argv } from "yargs";
-const ora = require("ora");
-const glob = require("glob");
 
 type deprecateOption = (key: string, mssage: string) => void;
 
-type Context = Argv & {
+type InitContext = Argv & {
   type?: string;
 };
 
-export const builder = (yargs: Context) => {
+export const builder = (yargs: InitContext) => {
   return yargs;
 };
 
-export async function handler(context: Context) {
-  const project = await projectInput("create");
+export async function handler() {
+  const context = await projectInput("create");
 
-  await create(project);
+  await create(context);
 }
 
 export const command = "init";
