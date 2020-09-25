@@ -9,7 +9,7 @@
  */
 
 import { Argv } from "yargs";
-import scalffold, { PresetType } from "../utils/scalffolder";
+import scalffold, { PresetType } from "../utils/scaffold";
 
 interface ArgType {
   action: string;

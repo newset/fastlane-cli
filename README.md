@@ -82,13 +82,18 @@ fl lint
 - 发布版本 release
 - 添加子包 add
 
+```
+fl weapp add sso
+fl release --desc='发布' --version='1.0.0'
+```
+
 ### 工具集 Tool
 
 ```
 export `fl tool cos | xargs `
 ```
 
-- 获取 cos token
+- 根据`COS_TOKEN_URL`获取 cos token
 
 ## 开发
 

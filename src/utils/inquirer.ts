@@ -24,12 +24,6 @@ const Questions: any = {
       },
     },
     {
-      type: "confirm",
-      message: "是否创建到当前目录？",
-      name: "cwd",
-      default: () => false,
-    },
-    {
       type: "input",
       name: "name",
       message: "项目名称",
@@ -42,10 +36,12 @@ const Questions: any = {
         }
         return true;
       },
-      when: function (answer: any) {
-        // 当cwe为false的时候才会到达这步
-        return !answer.cwd;
-      },
+    },
+    {
+      type: "confirm",
+      message: "是否创建到当前目录？",
+      name: "cwd",
+      default: () => false,
     },
   ],
   auth: [],
