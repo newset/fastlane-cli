@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.2.0...v1.3.0) (2020-09-25)
+
+### Features
+
+- add weapp preview ([527d2d0](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/527d2d0a93a618f0072a9ee0bff1aa486ce4378c))
+
 ## [1.2.0](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v0.0.3...v1.2.0) (2020-09-25)
 
 ### Features
