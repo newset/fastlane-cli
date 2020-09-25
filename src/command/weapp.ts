@@ -16,15 +16,24 @@ interface ArgType {
   version?: string;
   desc?: string;
   name?: string;
+  dest?: string;
 }
 
 export const handler = async (args: ArgType) => {
-  switch (args.action) {
+  const { action, name } = args;
+  switch (action) {
     case "release":
       await release(args);
       break;
     case "add":
-      await add(args.name as PresetType);
+      const { dest } = args;
+      await scalffold(
+        name as PresetType,
+        dest.endsWith("/") ? dest + name : dest,
+        {
+          name,
+        }
+      );
       break;
     default:
       break;
@@ -35,13 +44,18 @@ export const builder = (yargs: Argv) => {
   yargs
     .positional("action", {
       description: "操作",
+      required: true,
       choices: ["add", "release"],
     })
-    .option("name", {
+    .positional("name", {
       description: "插件名称",
       choices: ["sso"],
     })
     .option("version", { default: process.env.CI_VERSION })
+    .option("dest", {
+      description: "自定义安装目录, 注意斜杠结尾",
+      default: "package/",
+    })
     .option("desc", {
       default: process.env.CI_MESSAGE,
     });
@@ -57,10 +71,6 @@ export const builder = (yargs: Argv) => {
  */
 async function release(context: ArgType) {}
 
-async function add(name: PresetType) {
-  await scalffold(name, `package/${name}`);
-}
-
-export const command = "weapp <release|add>";
+export const command = "weapp <action> [name]";
 
 export const desc = "小程序工具集";
