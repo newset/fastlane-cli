@@ -73,6 +73,7 @@ fl lint
 
 - 发布版本 release
 - 添加子包 add
+- 预览小程序 preview
 
 ```
 # 安装 sso 模块 到 package/sso 目录

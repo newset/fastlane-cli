@@ -10,7 +10,7 @@
 
 import { Argv } from "yargs";
 import scalffold, { PresetType } from "../utils/scaffold";
-import { uploadWeapp } from "../utils/ci";
+import ci from "../utils/ci";
 
 interface ArgType {
   action: string;
@@ -23,8 +23,11 @@ interface ArgType {
 export const handler = async (args: ArgType) => {
   const { action, name } = args;
   switch (action) {
+    case "preview":
+      ci.preview();
+      break;
     case "release":
-      await uploadWeapp({
+      await ci.upload({
         desc: args.desc,
         version: args.version,
       });
@@ -49,7 +52,7 @@ export const builder = (yargs: Argv) => {
     .positional("action", {
       description: "操作",
       required: true,
-      choices: ["add", "release"],
+      choices: ["add", "release", "preview"],
     })
     .positional("name", {
       description: "插件名称",
