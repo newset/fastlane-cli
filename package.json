@@ -7,7 +7,7 @@
     "dev": "tsc -w",
     "build": "rm -rf lib && tsc",
     "test": "ava -v",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "rm -rf lib && npm run build",
     "version": "standard-version",
     "prettify": "prettier --write"
   },

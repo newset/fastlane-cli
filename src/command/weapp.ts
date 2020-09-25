@@ -9,9 +9,26 @@
  */
 
 import { Argv } from "yargs";
+import scalffold, { PresetType } from "../utils/scalffolder";
 
-export const handler = (args: Argv) => {
-  release();
+interface ArgType {
+  action: string;
+  version?: string;
+  desc?: string;
+  name?: string;
+}
+
+export const handler = async (args: ArgType) => {
+  switch (args.action) {
+    case "release":
+      await release(args);
+      break;
+    case "add":
+      await add(args.name as PresetType);
+      break;
+    default:
+      break;
+  }
 };
 
 export const builder = (yargs: Argv) => {
@@ -19,6 +36,10 @@ export const builder = (yargs: Argv) => {
     .positional("action", {
       description: "操作",
       choices: ["add", "release"],
+    })
+    .option("name", {
+      description: "插件名称",
+      choices: ["sso"],
     })
     .option("version", { default: process.env.CI_VERSION })
     .option("desc", {
@@ -34,10 +55,12 @@ export const builder = (yargs: Argv) => {
  *
  * 命令行参数: --version --desc
  */
-async function release() {}
+async function release(context: ArgType) {}
 
-async function add() {}
+async function add(name: PresetType) {
+  await scalffold(name, `package/${name}`);
+}
 
-export const command = "weapp <action>";
+export const command = "weapp <release|add>";
 
 export const desc = "小程序工具集";
