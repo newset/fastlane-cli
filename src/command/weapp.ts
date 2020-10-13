@@ -9,7 +9,7 @@
  */
 
 import { Argv } from "yargs";
-import scalffold, { PresetType } from "../utils/scaffold";
+import scalffold, { PresetType, getTemplateUrl } from "../utils/scaffold";
 import ci from "../utils/ci";
 
 interface ArgType {
@@ -34,11 +34,12 @@ export const handler = async (args: ArgType) => {
       break;
     case "add":
       const { dest } = args;
-      await scalffold(
-        name as PresetType,
-        dest.endsWith("/") ? dest + name : dest,
-        args
-      );
+      // 查询 presets
+      const url = await getTemplateUrl(name, "weapp-add");
+      await scalffold(url, dest.endsWith("/") ? dest + name : dest, {
+        ...args,
+        action: "weapp-add",
+      });
       break;
     default:
       break;
@@ -54,7 +55,6 @@ export const builder = (yargs: Argv) => {
     })
     .positional("name", {
       description: "插件名称",
-      choices: ["sso"],
     })
     .option("version", { default: process.env.CI_COMMIT_TAG })
     .option("dest", {

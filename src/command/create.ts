@@ -1,4 +1,4 @@
-import scalffold, { PresetType, createChoices } from "../utils/scaffold";
+import scalffold, { getTemplateUrl, createChoices } from "../utils/scaffold";
 import { Argv } from "yargs";
 
 type CreateContext = {
@@ -15,7 +15,6 @@ export const builder = (yargs: Argv & CreateContext) => {
     })
     .options({
       type: {
-        choices: [0, 1, 2, ...createChoices],
         alias: "t",
         required: true,
         description: "0-hybrid, 1-admin, 2-nodejs, cli",
@@ -41,7 +40,9 @@ export async function handler(context: CreateContext) {
     actual = createChoices[type];
   }
 
-  await scalffold(actual as PresetType, !cwd ? name : ".", context);
+  const url = await getTemplateUrl(actual, "create");
+
+  await scalffold(url, !cwd ? name : ".", context);
 }
 
 export const command = "create <name>";

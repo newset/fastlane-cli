@@ -13,6 +13,10 @@ const fl = cli
       description: "分支",
     },
   })
+  .fail(function (_, err) {
+    console.log(err.message);
+    process.exit(1);
+  })
   .alias("help", "h")
   .alias("version", "v")
   .help().argv;
