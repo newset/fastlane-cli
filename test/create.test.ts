@@ -1,4 +1,4 @@
-const { getTemplateUrl } = require("../lib/api");
+const { getTemplateUrl, createChoices } = require("../lib/utils/scaffold");
 const yargs = require("yargs");
 const test = require("ava");
 const create = require("../lib/command/create");
@@ -18,8 +18,8 @@ const subs = {
 // fl create temp --type=dash
 // fl create temp --type=node
 test("测试create命令返回的仓库地址", async (t) => {
-  const mobielURL = getTemplateUrl(0, "create");
-  const nodeURL = getTemplateUrl(2, "create");
+  const mobielURL = getTemplateUrl(createChoices[0]);
+  const nodeURL = getTemplateUrl(createChoices[2], "create");
   const nodeNameURL = getTemplateUrl("nodejs", "create");
 
   t.is(mobielURL, presets[0]);

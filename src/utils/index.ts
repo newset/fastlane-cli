@@ -59,13 +59,17 @@ export function copyFiles(
   }
 }
 
-export async function getTemplate(templateName: string, url: string) {
+export async function getTemplate(
+  templateName: string,
+  url: string,
+  branch = "master"
+) {
   // 获取模板
   const tempDir = path.join(rootDir, "template", templateName);
 
   fse.removeSync(tempDir);
 
-  const command = `git clone git@${url} --depth 1 template/${templateName}`;
+  const command = `git clone -b ${branch} git@${url} --depth 1 template/${templateName}`;
   await exec(command, { cwd: rootDir });
   return path.join(tempDir, "template");
 }

@@ -28,11 +28,13 @@ export const weappChoices = ["sso", "payment"];
 
 export type PresetType = keyof Presets;
 
+export const getTemplateUrl = (type: PresetType): string => presets[type];
+
 export default async (scafoldType: PresetType, dest: string, context?: any) => {
   ora().start().info(`开始安装${scafoldType}`);
 
   const templateDir = await load(
-    getTemplate(scafoldType, presets[scafoldType]),
+    getTemplate(scafoldType, presets[scafoldType], context.branch),
     "下载开始",
     "下载完毕"
   );

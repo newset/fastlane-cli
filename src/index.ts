@@ -8,6 +8,11 @@ import cli from "yargs";
 const fl = cli
   .commandDir("command")
   .demandCommand(1, "")
+  .options({
+    branch: {
+      description: "分支",
+    },
+  })
   .alias("help", "h")
   .alias("version", "v")
   .help().argv;

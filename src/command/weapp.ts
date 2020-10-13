@@ -37,9 +37,7 @@ export const handler = async (args: ArgType) => {
       await scalffold(
         name as PresetType,
         dest.endsWith("/") ? dest + name : dest,
-        {
-          name,
-        }
+        args
       );
       break;
     default:
