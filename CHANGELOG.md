@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.0...v1.4.1) (2020-10-15)
+
+### Features
+
+- 添加 registry 变量, 优化各命令参数 ([ca26fa0](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/ca26fa004a8edf15164a13c81a2adc408cf5c287))
+
 ## [1.4.0](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.3.2...v1.4.0) (2020-10-13)
 
 ### Features
