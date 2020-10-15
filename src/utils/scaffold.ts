@@ -51,11 +51,15 @@ export default async (url: string, dest: string, context?: any) => {
   console.log("开始生成项目文件: ");
   const spinner = ora("拷贝文件: ").start();
 
-  copyFiles({ dir: templateDir, dest }, context, (file: string) => {
-    spinner.succeed(`copy ${file.replace("./", "")}`);
-  });
+  copyFiles(
+    { dir: path.join(templateDir, "template"), dest },
+    context,
+    (file: string) => {
+      spinner.succeed(`copy ${file.replace("./", "")}`);
+    }
+  );
 
-  fse.removeSync(templateDir.replace(/template$/, ""));
+  fse.removeSync(templateDir);
   spinner.stop();
 };
 

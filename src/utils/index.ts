@@ -4,8 +4,10 @@ const template = require("lodash/template");
 const fs = require("fs");
 const fse = require("fs-extra");
 const path = require("path");
+const os = require("os");
 const { exec } = require("../utils/shell");
 const glob = require("glob");
+const join = path.join;
 
 export interface CreateOptions {
   filter?: () => [];
@@ -61,12 +63,17 @@ export function copyFiles(
 
 export async function getTemplate(url: string, branch = "master") {
   // 获取模板
-  const tempDir = path.join(rootDir, "template", path.parse(url).name);
-  fse.removeSync(tempDir);
+  const homedir = os.homedir();
+  const folder = ".fl-template";
+  const name = path.parse(url).name;
+  const tempDir = join(homedir, folder, name);
+  if (fs.existsSync(tempDir)) {
+    fse.removeSync(tempDir);
+  }
 
-  const command = `git clone -b ${branch} git@${url} --depth 1`;
-  await exec(command, { cwd: path.join(rootDir, "template") });
-  return path.join(tempDir, "template");
+  const command = `git clone -b ${branch} git@${url} --depth 1 ${folder}/${name}`;
+  await exec(command, { cwd: homedir });
+  return tempDir;
 }
 
 export const colors = {
