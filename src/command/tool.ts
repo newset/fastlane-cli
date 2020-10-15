@@ -1,6 +1,5 @@
-import { exec } from "child_process";
 import { Argv } from "yargs";
-import { getAuth } from "../utils/cdn";
+import { getAuth, upload } from "../utils/cdn";
 const XTOOL_URL = "https://github.com/goingta/xtool";
 
 const script = `
@@ -18,9 +17,15 @@ export const command = "tool <action>";
 export const desc = "安装 xtool";
 
 export const builder = (yargs: Argv) => {
-  return yargs.positional("action", {
-    choices: ["cos"],
-  });
+  return yargs
+    .positional("action", {
+      choices: ["cos"],
+    })
+    .options({
+      prefix: {
+        description: "cos 前缀",
+      },
+    });
 };
 
 export const handler = async (argv: Context) => {
@@ -28,6 +33,7 @@ export const handler = async (argv: Context) => {
   switch (argv.action) {
     case "cos":
       await getAuth();
+      await upload({});
       break;
     default:
   }

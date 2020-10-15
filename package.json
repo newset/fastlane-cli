@@ -18,8 +18,9 @@
     "type": "git",
     "url": "git@gitlab.aihaisi.com:qiexr/public-group/fastlane-cli.git"
   },
-  "file": [
-    "lib"
+  "files": [
+    "lib",
+    "shell"
   ],
   "author": "luojie",
   "license": "ISC",

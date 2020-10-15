@@ -82,7 +82,10 @@ fl weapp add sso
 # 安装 sso 模块 到 module/auth 目录
 fl weapp add sso --dest module/auth
 
-fl release --desc='发布' --version='1.0.0'
+fl weapp upload --desc='发布' --version='1.0.0'
+
+# 二维码模式
+fl weapp preview --qr=image
 ```
 
 ### 工具集 Tool

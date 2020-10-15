@@ -29,6 +29,9 @@ export const builder = (yargs: Argv & CreateContext) => {
       dist: {
         description: "构建目录",
       },
+      branch: {
+        description: "分支",
+      },
     });
 };
 

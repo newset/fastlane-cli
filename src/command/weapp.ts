@@ -26,7 +26,7 @@ export const handler = async (args: ArgType) => {
     case "preview":
       ci.preview({ desc });
       break;
-    case "release":
+    case "upload":
       await ci.upload({
         desc,
         version,
@@ -51,18 +51,28 @@ export const builder = (yargs: Argv) => {
     .positional("action", {
       description: "操作",
       required: true,
-      choices: ["add", "release", "preview"],
+      choices: ["add", "upload", "preview"],
     })
     .positional("name", {
       description: "插件名称",
     })
-    .option("version", { default: process.env.CI_COMMIT_TAG })
-    .option("dest", {
-      description: "自定义安装目录, 注意斜杠结尾",
-      default: "package/",
-    })
-    .option("desc", {
-      default: process.env.CI_COMMIT_MESSAGE,
+    .options({
+      qr: {
+        description: "二维码格式",
+        choices: ["image", "base64", "terminal"],
+        default: "terminal",
+      },
+      version: { default: process.env.CI_COMMIT_TAG },
+      branch: {
+        description: "分支",
+      },
+      dest: {
+        description: "自定义安装目录, 注意斜杠结尾",
+        default: "package/",
+      },
+      desc: {
+        default: process.env.CI_COMMIT_MESSAGE,
+      },
     });
 };
 

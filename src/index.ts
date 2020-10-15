@@ -4,17 +4,15 @@
 // 2. 问答模式
 import cli from "yargs";
 
+// @todo: load registry data
+
 // 注册命令
 const fl = cli
   .commandDir("command")
   .demandCommand(1, "")
-  .options({
-    branch: {
-      description: "分支",
-    },
-  })
-  .fail(function (_, err) {
-    console.log(err.message);
+  .fail(function (msg, err) {
+    console.log(err);
+    console.log(msg);
     process.exit(1);
   })
   .alias("help", "h")

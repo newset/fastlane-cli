@@ -34,6 +34,7 @@ interface CIContext {
   publicUrl?: string;
   desc?: string;
   version?: string;
+  qr?: string;
 }
 
 const setting = {
@@ -44,6 +45,8 @@ const setting = {
 function getCIOptions(context: CIContext) {
   const { desc } = context;
   return {
+    qrcodeFormat: context.qr,
+    qrcodeOutputDest: `${process.env.BUILD_ID || "qrcode"}.png`,
     desc: `[${process.env.APP_CONFIG_API_ENV || "prod"}]${desc}`,
     robot: process.env.CI_ROBOT || 30,
     setting,
@@ -66,17 +69,18 @@ export const start = async () => {
     JSON.stringify({ ...config, miniprogramRoot: "./" }, null, "  ")
   );
   // 初始化项目
-  return new ci.Project({
+  const project = new ci.Project({
     appid: config.appid,
     type: types[config.compileType as TypeKeys],
     projectPath,
     privateKeyPath,
     ignores: ["node_modules/**/*", "src"],
   });
+  return [project, config];
 };
 
 export const upload = async (context: CIContext) => {
-  const { desc, version } = context;
+  const { version } = context;
   const pkg = await fs.readJson(join(cwd, "package.json"), {
     encoding: "utf-8",
   });

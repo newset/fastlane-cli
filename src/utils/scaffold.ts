@@ -13,7 +13,9 @@ export const weappChoices = ["sso", "payment"];
 
 export type PresetType = keyof Presets;
 
-const registry = "https://gitee.com/qexr/registry/raw/master/fl.json";
+const registry =
+  process.env.FL_REGISTRY ||
+  "https://gitee.com/qexr/registry/raw/master/fl.json";
 
 type ActionType = "create" | "weapp-add";
 

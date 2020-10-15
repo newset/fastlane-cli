@@ -10,6 +10,11 @@ export const getAuth = async () => {
   return data;
 };
 
-export const upload = async () => {
+/**
+ * 上传内容 - /结尾表示文件夹
+ * prefix: /
+ * ignore: 排除
+ */
+export const upload = async (ctx: any) => {
   const bucket = "public";
 };
