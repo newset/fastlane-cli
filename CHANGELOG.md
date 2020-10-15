@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.2](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.1...v1.4.2) (2020-10-15)
+
+### Bug Fixes
+
+- 修复 create 脚本错误 ([dc6aec8](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/dc6aec88d3b0df05c888579828b6204f7531db45))
+
 ### [1.4.1](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.0...v1.4.1) (2020-10-15)
 
 ### Features
