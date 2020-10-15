@@ -20,7 +20,8 @@
   },
   "files": [
     "lib",
-    "shell"
+    "shell",
+    "template"
   ],
   "author": "luojie",
   "license": "ISC",

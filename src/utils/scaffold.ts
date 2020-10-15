@@ -1,7 +1,8 @@
 import { load, getTemplate, copyFiles } from "./index";
+import { get } from "./net";
 const ora = require("ora");
 const path = require("path");
-import { get } from "./net";
+const fse = require("fs-extra");
 
 interface Presets {
   [key: string]: string;
@@ -54,6 +55,7 @@ export default async (url: string, dest: string, context?: any) => {
     spinner.succeed(`copy ${file.replace("./", "")}`);
   });
 
+  fse.removeSync(templateDir.replace(/template$/, ""));
   spinner.stop();
 };
 

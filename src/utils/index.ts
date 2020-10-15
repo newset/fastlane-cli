@@ -62,7 +62,6 @@ export function copyFiles(
 export async function getTemplate(url: string, branch = "master") {
   // 获取模板
   const tempDir = path.join(rootDir, "template", path.parse(url).name);
-
   fse.removeSync(tempDir);
 
   const command = `git clone -b ${branch} git@${url} --depth 1`;

@@ -63,7 +63,7 @@ const api = (url: String) => `<%= data.apiPrefix %>${url}`;
 fl lint
 ```
 
-### 初始化开发环境 Boot
+### 初始化开发环境 Boot （仅限 Mac 系统）
 
 - 安装 homebrew
 - 安装 oh-my-zsh
