@@ -40,12 +40,15 @@
   },
   "dependencies": {
     "args": "^5.0.1",
+    "cos-nodejs-sdk-v5": "^2.8.2",
     "fs-extra": "^9.0.1",
     "glob": "^7.1.6",
     "inquirer": "^7.3.3",
+    "ip": "^1.1.5",
     "lodash": "^4.17.15",
     "miniprogram-ci": "^1.0.83",
     "ora": "^4.0.4",
+    "pretty-error": "^2.1.2",
     "yargs": "^15.4.1"
   },
   "ava": {

@@ -19,6 +19,8 @@ npm i fastlane-cli -g
 
 ### 创建项目
 
+> 运行命令前，需要保证终端有执行 git clone 的权限
+
 ```
 fl create [name] --type=0 --apiPrefix=/sso-auth --dist=/rapp/sso-auth
 ```
@@ -91,7 +93,7 @@ fl weapp preview --qr=image
 ### 工具集 Tool
 
 ```
-export `fl tool cos | xargs `
+export `fl tool cos | xargs`
 ```
 
 - 根据`COS_TOKEN_URL`获取 cos token

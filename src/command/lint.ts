@@ -14,6 +14,7 @@ const deps = {
   "@commitlint/config-conventional": "^8.3.4",
   husky: "^4.2.5",
   prettier: "^1.19.1",
+  eslint: "^7.11.0",
   "standard-version": "9.0.0",
   "lint-staged": "^10.3.0",
 };

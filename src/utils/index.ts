@@ -1,11 +1,13 @@
 const ora = require("ora");
 const template = require("lodash/template");
+const crypto = require("crypto");
+import { randomBytes } from "crypto";
 
 const fs = require("fs");
 const fse = require("fs-extra");
 const path = require("path");
 const os = require("os");
-const { exec } = require("../utils/shell");
+const { exec } = require("./shell");
 const glob = require("glob");
 const join = path.join;
 
@@ -15,8 +17,6 @@ export interface CreateOptions {
   dir: string;
   dest: string;
 }
-
-const rootDir = path.resolve(__dirname, "..", "..");
 
 export const load = (promise: any, title: string, done?: string) => {
   const spinner = ora(title).start();
@@ -72,7 +72,9 @@ export async function getTemplate(url: string, branch = "master") {
   }
 
   const command = `git clone -b ${branch} git@${url} --depth 1 ${folder}/${name}`;
-  await exec(command, { cwd: homedir });
+  await exec(command, {
+    cwd: homedir,
+  });
   return tempDir;
 }
 
@@ -100,3 +102,11 @@ export const colors = {
   cyanBG: "\x1B[46m", // 背景色为青色
   whiteBG: "\x1B[47m", // 背景色为白色
 };
+
+export function generateId(): string {
+  return randomBytes(4).toString("hex");
+}
+
+export function md5(str: string) {
+  return crypto.createHash("md5").update(str).digest("hex");
+}
