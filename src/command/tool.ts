@@ -6,7 +6,7 @@
 
 import { Argv } from "yargs";
 import { getAuth, upload, search } from "../utils/cdn";
-import { getQr } from "../utils/qr";
+import { showLocal } from "../utils/qr";
 const XTOOL_URL = "https://github.com/goingta/xtool";
 
 const script = `
@@ -26,7 +26,7 @@ export const desc = "其他工具";
 export const builder = (yargs: Argv) => {
   return yargs
     .positional("action", {
-      choices: ["cos", "put", "search", "qr"],
+      choices: ["cos", "put", "search"],
     })
     .options({
       region: {
@@ -55,9 +55,6 @@ export const handler = async (argv: Context) => {
       break;
     case "search":
       await search(argv);
-      break;
-    case "qr":
-      await getQr(argv);
       break;
     default:
   }

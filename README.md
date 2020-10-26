@@ -17,7 +17,7 @@ npm i fastlane-cli -g
 
 ## 功能
 
-### 创建项目
+### 创建项目 CREATE
 
 > 运行命令前，需要保证终端有执行 git clone 的权限
 
@@ -71,7 +71,7 @@ fl lint
 - 安装 oh-my-zsh
 - 配置 .zshrc
 
-### 小程序工具
+### 小程序工具 WEAPP
 
 - 发布版本 release
 - 添加子包 add
@@ -97,6 +97,14 @@ export `fl tool cos | xargs`
 ```
 
 - 根据`COS_TOKEN_URL`获取 cos token
+
+### 二维码工具
+
+根据端口显示当前 IP 对应端口二维码, 默认端口 80
+
+```
+fl qr --port 8080
+```
 
 ## 开发
 
