@@ -6,7 +6,7 @@
 
 import { Argv } from "yargs";
 import { getAuth, upload, search } from "../utils/cdn";
-import { getQr } from "../utils/qr";
+import { showLocal } from "../utils/qr";
 const XTOOL_URL = "https://github.com/goingta/xtool";
 
 const script = `
@@ -57,7 +57,7 @@ export const handler = async (argv: Context) => {
       await search(argv);
       break;
     case "qr":
-      await getQr(argv);
+      await showLocal(argv);
       break;
     default:
   }
