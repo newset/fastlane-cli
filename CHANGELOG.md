@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.4](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.3...v1.4.4) (2020-10-26)
+
+### Features
+
+- 完成 cdn 上传功能 ([c8c07cf](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/c8c07cfdc454a65637336d4dbe0722d5c9fb49a8))
+- 添加二维码工具 ([3823b2b](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/3823b2b424befacc612307fda023883344acd0a2))
+- 添加二维码工具 ([501dceb](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/501dceb96cc1d58dbf284b30f75c10fa0255fa86))
+
 ### [1.4.3](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.2...v1.4.3) (2020-10-15)
 
 ### Features
