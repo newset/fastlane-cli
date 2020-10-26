@@ -10,7 +10,5 @@ export const showLocal = (args: any) => {
   url.protocol = "http:";
 
   console.log("url: ", url.href);
-  qr.generate(url.href, {
-    // small: true
-  });
+  qr.generate(url.href);
 };
