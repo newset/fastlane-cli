@@ -85,7 +85,7 @@ export const upload = async (context: CIContext) => {
     encoding: "utf-8",
   });
 
-  const project = await start();
+  const [project] = await start();
   // 根据分支选择 robot
   const info = await ci.upload({
     project,
@@ -97,7 +97,7 @@ export const upload = async (context: CIContext) => {
 };
 
 export const preview = async (context: CIContext) => {
-  const project = await start();
+  const [project] = await start();
   // 根据分支选择 robot
   const info = await ci.preview({
     project,
