@@ -9,7 +9,7 @@
  */
 
 import { Argv } from "yargs";
-import scalffold, { PresetType, getTemplateUrl } from "../utils/scaffold";
+import scalffold, { getTemplateUrl } from "../utils/scaffold";
 import ci from "../utils/ci";
 
 interface ArgType {
@@ -21,16 +21,13 @@ interface ArgType {
 }
 
 export const handler = async (args: ArgType) => {
-  const { action, name, desc, version } = args;
+  const { action, name, ...ctx } = args;
   switch (action) {
     case "preview":
-      ci.preview({ desc });
+      ci.preview(ctx);
       break;
     case "upload":
-      await ci.upload({
-        desc,
-        version,
-      });
+      await ci.upload(ctx);
       break;
     case "add":
       const { dest } = args;
@@ -56,11 +53,16 @@ export const builder = (yargs: Argv) => {
     .positional("name", {
       description: "插件名称",
     })
+    .default("minify", false, "默认不开启压缩")
     .options({
       qr: {
         description: "二维码格式",
         choices: ["image", "base64", "terminal"],
         default: "terminal",
+      },
+      minify: {
+        description: "是否压缩",
+        type: "boolean",
       },
       version: { default: process.env.CI_COMMIT_TAG },
       branch: {

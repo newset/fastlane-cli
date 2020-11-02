@@ -16,7 +16,8 @@ const fl: any = yargs
     process.exit(1);
   })
   .alias("help", "h")
-  .alias("version", "v")
-  .help().argv;
+  .alias("version", "v");
 
-export default fl;
+export default fl.help().argv;
+
+export { fl };

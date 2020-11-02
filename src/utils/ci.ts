@@ -35,21 +35,22 @@ interface CIContext {
   desc?: string;
   version?: string;
   qr?: string;
+  minify?: boolean;
 }
 
-const setting = {
-  es6: false,
-  es7: true,
-};
-
 function getCIOptions(context: CIContext) {
-  const { desc } = context;
+  const { desc, minify = false } = context;
+
   return {
     qrcodeFormat: context.qr,
     qrcodeOutputDest: `${process.env.BUILD_ID || "qrcode"}.png`,
     desc: `[${process.env.APP_CONFIG_API_ENV || "prod"}]${desc}`,
     robot: process.env.CI_ROBOT || 30,
-    setting,
+    setting: {
+      es6: false,
+      es7: true,
+      minify,
+    },
   };
 }
 
