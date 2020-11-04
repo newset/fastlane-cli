@@ -23,11 +23,15 @@ export const builder = (yargs: Argv & CreateContext) => {
         description: "是否在当前目录创建项目，默认为创建到当前目录下name目录",
         type: "boolean",
       },
-      apiPrefix: {
-        description: "接口前缀",
+      compile: {
+        description: "是否执行编译",
+        type: "boolean",
+        default: true,
       },
-      dist: {
-        description: "构建目录",
+      interpolate: {
+        description: "template 解析符",
+        default: "<%#([sS]+?)%>",
+        type: "string",
       },
       branch: {
         description: "分支",
