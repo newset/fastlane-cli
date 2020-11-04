@@ -62,7 +62,8 @@ const api = (url: String) => `<%= data.apiPrefix %>${url}`;
 - 添加 package.json scripts
 
 ```
-fl lint
+fl lint vue
+fl lint react
 ```
 
 ### 初始化开发环境 Boot （仅限 Mac 系统）
