@@ -50,10 +50,13 @@ export function copyFiles(
     // 写入新文件
     const original = fs.readFileSync(path.resolve(dir, file)).toString();
     let compiled = original;
-    if (file.match(/(js|ts|jsx|tsx|json|html|yaml|yml.sh)$/)) {
+    if (
+      file.match(/(js|ts|jsx|tsx|json|html|yaml|yml.sh)$/) &&
+      context.compile
+    ) {
       compiled = template(original, {
         variable: "data",
-        interpolate: /<%=([\s\S]+?)%>/g,
+        interpolate: new RegExp(context.interpolate),
       })(context);
     }
     fse.outputFile(reservedPath(dest, file), compiled);
