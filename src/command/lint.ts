@@ -59,14 +59,45 @@ const eslint = {
     }
   }
   `,
-  vue: `module.export = {
-    "extends": "eslint-config-vue",
-      "parserOptions": {
-      "ecmaFeatures": {
-        "legacyDecorators": true
-      }
-    }
-  }
+  vue: `const path = require('path');
+/**@type {import('eslint').Linter.Config} */
+const eslintConfig = {
+  root: true,
+  env: {
+    node: true,
+    jquery: true,
+  },
+  plugins: ['@typescript-eslint'],
+  extends: [
+    'plugin:vue/essential',
+    '@vue/airbnb',
+    '@vue/typescript',
+  ],
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: path.resolve(__dirname, 'node_modules/@vue/cli-service/webpack.config.js'),
+      },
+    },
+  },
+  rules: {
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'import/prefer-default-export': 'off',
+    'func-names': 'off', // 匿名函数
+    'prefer-promise-reject-errors': 'off',
+    'no-restricted-syntax': 'off',
+    'no-underscore-dangle': 'off', // item._xxx
+    'no-plusplus': 'off', // ++
+    'guard-for-in': 'off', // for in
+    'class-methods-use-this': 'off',
+  },
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+    extraFileExtensions: ['.ts', '.tsx', '.js', '.jsx', '.vue'],
+  },
+};
+module.exports = eslintConfig;
   `,
 };
 
@@ -86,9 +117,9 @@ type CommandArg = Arguments & {
   eslint?: boolean;
 };
 
-async function writeConfigFiles() {
+async function writeConfigFiles(opts: CommandArg) {
   const spinner = ora("添加 依赖").start();
-  const type = "react";
+  const type = opts.type;
   const install = `yarn add ${Object.keys(deps).join(" ")} -D`;
   await new Promise((resolve) =>
     exec(install, (_err, stdout) => resolve(stdout))
@@ -124,7 +155,7 @@ async function udpatePackageJson() {
 }
 
 export const handler = async (opts: CommandArg) => {
-  await writeConfigFiles();
+  await writeConfigFiles(opts);
   await udpatePackageJson();
 };
 
