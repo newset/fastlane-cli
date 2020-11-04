@@ -3,9 +3,8 @@
 // 1. 全参数传入
 // 2. 问答模式
 import yargs from "yargs";
-require("pretty-error")
-  .start()
-  .skip(() => true);
+require("pretty-error").start();
+// .skip(() => true);
 
 // 注册命令
 const fl: any = yargs
@@ -17,7 +16,8 @@ const fl: any = yargs
     process.exit(1);
   })
   .alias("help", "h")
-  .alias("version", "v")
-  .help().argv;
+  .alias("version", "v");
 
-export default fl;
+export default fl.help().argv;
+
+export { fl };

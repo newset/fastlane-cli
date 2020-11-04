@@ -1,7 +1,7 @@
 // const fl = require("../lib/index").default;
 const test = require("ava");
 const yargs = require("yargs");
-const tools = require("../lib/command/weapp");
+const tools = require("../lib/command/tool");
 const noop = () => {};
 
 test("tool 命令解析", async (t) => {
