@@ -36,10 +36,11 @@ interface CIContext {
   version?: string;
   qr?: string;
   minify?: boolean;
+  es7?: boolean;
 }
 
 function getCIOptions(context: CIContext) {
-  const { desc, minify = false } = context;
+  const { desc, minify = false, es7 } = context;
 
   return {
     qrcodeFormat: context.qr,
@@ -48,7 +49,7 @@ function getCIOptions(context: CIContext) {
     robot: process.env.CI_ROBOT || 30,
     setting: {
       es6: false,
-      es7: true,
+      es7: Boolean(es7),
       minify,
     },
   };

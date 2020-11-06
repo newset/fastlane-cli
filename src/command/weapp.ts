@@ -68,6 +68,10 @@ export const builder = (yargs: Argv) => {
       branch: {
         description: "分支",
       },
+      es7: {
+        default: true,
+        description: "是否开启增强编译",
+      },
       dest: {
         description: "自定义安装目录, 注意斜杠结尾",
         default: "package/",
