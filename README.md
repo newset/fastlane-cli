@@ -61,9 +61,18 @@ const api = (url: String) => `<%= data.apiPrefix %>${url}`;
 - 添加 eslint 配置
 - 添加 package.json scripts
 
+#### 参数
+
+- type?: "react" | "vue";
+- stylelint?: boolean; 可选参数。是否添加 stylelint 配置，默认为 true
+- usenpm?: boolean; 可选参数。是否使用 npm ，默认 false ，false 时使用 yarn
+
 ```
-fl lint vue
-fl lint react
+// fl lint [--type=react|vue, default: react] [--stylelint=true, default:true] [--usenpm=true, default: false]
+
+fl lint --type=react --usenpm=true
+
+fl lint --type=vue --usenpm=true
 ```
 
 ### 初始化开发环境 Boot （仅限 Mac 系统）
