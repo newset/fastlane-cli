@@ -10,6 +10,12 @@ require("pretty-error").start();
 const fl: any = yargs
   .commandDir("command")
   .demandCommand(1, "")
+  .middleware((argv) => {
+    if (argv.dryRun) {
+      console.log(argv);
+      process.exit(0);
+    }
+  })
   .fail(function (msg, err) {
     err && console.log(err);
     msg && console.log(msg);

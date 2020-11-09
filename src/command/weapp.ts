@@ -53,7 +53,7 @@ export const builder = (yargs: Argv) => {
     .positional("name", {
       description: "插件名称",
     })
-    .default("minify", false, "默认不开启压缩")
+    // .default("minify", "默认不开启压缩", false)
     .options({
       qr: {
         description: "二维码格式",
@@ -70,6 +70,7 @@ export const builder = (yargs: Argv) => {
       },
       es7: {
         default: true,
+        type: "boolean",
         description: "是否开启增强编译",
       },
       dest: {
