@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.8](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.6...v1.4.8) (2020-11-09)
+
+### Features
+
+- use new template delimintator ([23e0fe6](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/23e0fe691b61e5cf491b81b16afc2d3041ce8ab2))
+- 添加 weapp -es7 flag ([1bb9e97](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/1bb9e978a40772522f7947be9b8e2107e99792f8))
+- 添加 vue lint 配置 ([8d15f20](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/8d15f2025c0eaa6c25650e5204934af838a0cb96))
+
 ### [1.4.7](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.6...v1.4.7) (2020-11-04)
 
 ### [1.4.6](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.5...v1.4.6) (2020-11-02)
