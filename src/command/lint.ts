@@ -5,7 +5,7 @@
 // changelog
 // eslint
 // script 添加 "version": "standard-version"
-import { Argv, Arguments } from "yargs";
+import { Argv, Arguments, conflicts } from "yargs";
 const ora = require("ora");
 
 // deps:
@@ -18,6 +18,59 @@ const deps = {
   "standard-version": "9.0.0",
   "lint-staged": "^10.3.0",
 };
+
+const depsWithType = {
+  react: ["eslint-config-airbnb"],
+  vue: [
+    "@vue/eslint-config-airbnb",
+    "@vue/eslint-config-typescript",
+    "@typescript-eslint/eslint-plugin",
+    "@typescript-eslint/parser",
+    "eslint-import-resolver-webpack",
+    "eslint-plugin-vue",
+  ],
+};
+
+// stylelint的依赖
+const stylelintDeps = [
+  "stylelint",
+  "stylelint-order",
+  "stylelint-scss",
+  "stylelint-config-standard",
+  "stylelint-webpack-plugin",
+];
+
+// .stylelintrc.js
+const stylelint = `module.exports = {
+  processors: [],
+  extends: 'stylelint-config-standard',
+  plugins: ['stylelint-order', 'stylelint-scss'],
+  rules: {
+    "at-rule-empty-line-before": "always",
+    "at-rule-name-case": "lower",
+    "block-no-empty": true,
+    // scss 语法提示
+    // 参考 https://github.com/stylelint/stylelint/issues/3190
+    'at-rule-no-unknown': null,
+    'scss/at-rule-no-unknown': true,
+    // css书写顺序
+    'order/order': [
+      'declarations',
+      'custom-properties',
+      'dollar-variables',
+      'rules',
+      'at-rules'
+    ],
+    'order/properties-order': [
+      'position',
+      'z-index',
+       // 其他样式的顺序
+    ],
+    // 其他规则
+    'no-empty-source': null,
+  }
+};
+`;
 
 // commitlint.config.js
 const commitlint = `module.exports = {
@@ -51,7 +104,7 @@ const husky = {
 // eslint
 const eslint = {
   react: `module.export = {
-    "extends": "eslint-config-umi",
+    "extends": "eslint-config-airbnb",
       "parserOptions": {
       "ecmaFeatures": {
         "legacyDecorators": true
@@ -115,12 +168,23 @@ import { exec } from "child_process";
 type CommandArg = Arguments & {
   type?: "react" | "vue";
   eslint?: boolean;
+  stylelint?: boolean;
+  usenpm?: boolean;
 };
 
 async function writeConfigFiles(opts: CommandArg) {
   const spinner = ora("添加 依赖").start();
   const type = opts.type;
-  const install = `yarn add ${Object.keys(deps).join(" ")} -D`;
+  const usenpm = opts.usenpm;
+  let depsList = Object.keys(deps).concat(depsWithType[type]);
+  if (opts.stylelint) {
+    depsList = depsList.concat(stylelintDeps);
+  }
+  const install = usenpm
+    ? `npm i -D ${depsList.join(
+        " "
+      )} --registry=https://registry.npm.taobao.org`
+    : `yarn add ${depsList.join(" ")} -D`;
   await new Promise((resolve) =>
     exec(install, (_err, stdout) => resolve(stdout))
   ).then(console.log);
@@ -130,7 +194,13 @@ async function writeConfigFiles(opts: CommandArg) {
   await fs.writeFile("./commitlint.config.js", Buffer.from(commitlint));
   spinner.succeed("写入 eslint");
   // 写入 eslint
-  fs.writeFile("./.eslintrc.js", Buffer.from(eslint[type]));
+  await fs.writeFile("./.eslintrc.js", Buffer.from(eslint[type]));
+
+  if (opts.stylelint) {
+    spinner.succeed("写入 stylelint");
+    // 写入 stylelint
+    fs.writeFile("./.stylelintrc.js", Buffer.from(stylelint));
+  }
 }
 
 async function udpatePackageJson() {
@@ -169,6 +239,16 @@ export const builder = (yargs: Argv) => {
       eslint: {
         describe: "关闭eslint",
         default: true,
+        type: "boolean",
+      },
+      stylelint: {
+        describe: "添加stylelint",
+        default: true,
+        type: "boolean",
+      },
+      usenpm: {
+        describe: "使用npm",
+        default: false,
         type: "boolean",
       },
     });
