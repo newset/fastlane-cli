@@ -24,9 +24,19 @@ const Questions: any = {
       },
     },
     {
+      type: "confirm",
+      message: "是否创建到当前目录？",
+      name: "cwd",
+      default: () => false,
+    },
+    {
       type: "input",
       name: "name",
       message: "项目名称",
+      when: function (answer: any) {
+        // 当cwd为false的时候才会到达这步
+        return !answer.cwd; //只有上一步return false才会这个input
+      },
       default: () => {
         return path.basename(process.cwd());
       },
@@ -38,10 +48,21 @@ const Questions: any = {
       },
     },
     {
-      type: "confirm",
-      message: "是否创建到当前目录？",
-      name: "cwd",
-      default: () => false,
+      type: "list",
+      name: "branch",
+      message: "模板分支(master默认使用umi2_antd4)",
+      choices: () => {
+        return ["master", "umi3_antd4", "umi2_antd4"];
+      },
+      default: () => {
+        return "master";
+      },
+      validate: (val: string) => {
+        if (!val) {
+          return "请选择分支";
+        }
+        return true;
+      },
     },
   ],
   auth: [],
