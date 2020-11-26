@@ -63,16 +63,18 @@ const api = (url: String) => `<%= data.apiPrefix %>${url}`;
 
 #### 参数
 
-- type?: "react" | "vue";
+- type?: "react" | "vue" | "vuets";
 - stylelint?: boolean; 可选参数。是否添加 stylelint 配置，默认为 true
 - usenpm?: boolean; 可选参数。是否使用 npm ，默认 false ，false 时使用 yarn
 
 ```
-// fl lint [--type=react|vue, default: react] [--stylelint=true, default:true] [--usenpm=true, default: false]
+// fl lint [--type=react|vue|vuets, default: react] [--stylelint=true, default:true] [--usenpm=true, default: false]
 
 fl lint --type=react --usenpm=true
 
 fl lint --type=vue --usenpm=true
+
+fl lint --type=vuets --usenpm=true
 ```
 
 ### 初始化开发环境 Boot （仅限 Mac 系统）
