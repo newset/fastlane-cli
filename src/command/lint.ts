@@ -23,6 +23,11 @@ const depsWithType = {
   react: ["eslint-config-airbnb"],
   vue: [
     "@vue/eslint-config-airbnb",
+    "eslint-import-resolver-webpack",
+    "eslint-plugin-vue",
+  ],
+  vuets: [
+    "@vue/eslint-config-airbnb",
     "@vue/eslint-config-typescript",
     "@typescript-eslint/eslint-plugin",
     "@typescript-eslint/parser",
@@ -46,9 +51,9 @@ const stylelint = `module.exports = {
   extends: 'stylelint-config-standard',
   plugins: ['stylelint-order', 'stylelint-scss'],
   rules: {
-    "at-rule-empty-line-before": "always",
-    "at-rule-name-case": "lower",
-    "block-no-empty": true,
+    'at-rule-empty-line-before': "always",
+    'at-rule-name-case': "lower",
+    'block-no-empty': true,
     // scss 语法提示
     // 参考 https://github.com/stylelint/stylelint/issues/3190
     'at-rule-no-unknown': null,
@@ -113,6 +118,40 @@ const eslint = {
   }
   `,
   vue: `const path = require('path');
+/**@type {import('eslint').Linter.Config} */
+const eslintConfig = {
+  root: true,
+  env: {
+    node: true,
+    jquery: true,
+  },
+  extends: [
+    'plugin:vue/essential',
+    '@vue/airbnb',
+  ],
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: path.resolve(__dirname, 'node_modules/@vue/cli-service/webpack.config.js'),
+      },
+    },
+  },
+  rules: {
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'import/prefer-default-export': 'off',
+    'func-names': 'off', // 匿名函数
+    'prefer-promise-reject-errors': 'off',
+    'no-restricted-syntax': 'off',
+    'no-underscore-dangle': 'off', // item._xxx
+    'no-plusplus': 'off', // ++
+    'guard-for-in': 'off', // for in
+    'class-methods-use-this': 'off',
+  }
+};
+module.exports = eslintConfig;
+  `,
+  vuets: `const path = require('path');
 /**@type {import('eslint').Linter.Config} */
 const eslintConfig = {
   root: true,
@@ -233,7 +272,7 @@ export const builder = (yargs: Argv) => {
   return yargs
     .positional("type", {
       default: "react",
-      choices: ["react", "vue"],
+      choices: ["react", "vue", "vuets"],
     })
     .options({
       eslint: {
