@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.12](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.9...v1.4.12) (2020-11-26)
+
+### Features
+
+- **拆分类型:** vue 类型分为 vue 和 vue-ts ([d3ec04e](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/d3ec04ec7e9255d43f09a1b85464eaef5dd16469))
+- init 命令新增模板分支的选择 ([0502993](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/050299341be52cd0a52deb2041678d92b6af5094))
+- **lint:** lint 扩展 ([6577d17](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/6577d17cdc18bf03625e831a2a69b6fcf60b46de))
+
 ### [1.4.11](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.9...v1.4.11) (2020-11-26)
 
 ### Features
