@@ -3,6 +3,7 @@ const template = require("lodash/template");
 const crypto = require("crypto");
 import { randomBytes } from "crypto";
 
+const chunk = require("lodash/chunk");
 const fs = require("fs");
 const fse = require("fs-extra");
 const path = require("path");
@@ -117,3 +118,14 @@ export function md5(str: string, length = 16): string {
   }
   return hash;
 }
+
+export const limit = async function <T>(iterable: T[], count = 3) {
+  return await chunk(iterable, count).reduce((pre: Promise<T[]>, cur: T[]) => {
+    return pre.then((last) => {
+      return Promise.all(cur.map((item: any) => item())).then((data) => [
+        ...last,
+        ...data,
+      ]);
+    });
+  }, Promise.resolve([]));
+};

@@ -137,3 +137,7 @@ fl spa mashup --name HIS聚合系统
 ```
 yarn global add "file:$(pwd)/"
 ```
+
+## TODO
+
+- [ ] lint 内容通过单独的仓库进行管理
