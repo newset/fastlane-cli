@@ -6,6 +6,10 @@ const COS = require("cos-nodejs-sdk-v5");
 import glob from "glob";
 const path = require("path");
 
+export const buckets = {
+  default: process.env.DEFAULT_BUCKET,
+};
+
 function getCosSetting(args: any) {
   return {
     Bucket: args.bucket,
@@ -16,15 +20,19 @@ function getCosSetting(args: any) {
 export const getAuth = async (shell = true) => {
   const url = process.env.COS_TOKEN_URL;
   const { data } = await get(url);
-  const envs = `SecretId=${data.tmpSecretId}\nSecretKey=${data.tmpSecretKey}`;
+  const envs = `SecretId=${data.SecretId}\nSecretKey=${data.SecretKey}`;
   if (shell) {
     console.log(envs);
   }
   return data;
 };
 
-const createClient = () => {
+/**
+ * 通过API获取临时token创建client
+ */
+export const createTempClient = () => {
   const cos = new COS({
+    FileParallelLimit: 5,
     getAuthorization: async (_: any, callback: any) => {
       const data = await getAuth(false);
       callback({
@@ -39,44 +47,74 @@ const createClient = () => {
 };
 
 /**
- * 上传内容 - /结尾表示文件夹
- * prefix: /
- * ignore: 排除
+ * 通过环境变量创建client
  */
-export const upload = async (ctx: any) => {
-  if (!ctx.from) throw new Error("请指定上传文件");
-
-  const cos = createClient();
-
-  const files = glob.sync(ctx.from, {
-    nodir: true,
+export function createClient() {
+  return new COS({
+    FileParallelLimit: 5,
+    SecretId: process.env.COS_SECRETID,
+    SecretKey: process.env.COS_SECRETKEY,
   });
+}
 
-  if (!files.length) throw new Error("文件不存在");
+export class Client {
+  private client: any;
+  constructor(type = "temp", authUrl?: string) {
+    if (type === "temp") {
+      this.client = createTempClient();
+    } else {
+      this.client = createClient();
+    }
+    return this;
+  }
 
-  cos.uploadFiles({
-    files: files.map((file) => ({
-      ...getCosSetting(ctx),
-      FilePath: file,
-    })),
-    onFileFinish: function (err: any, data: any, options: any) {
-      if (err) {
-        console.log(err, data);
-        return;
-      }
+  /**
+   * 上传内容 - /结尾表示文件夹
+   * prefix: /
+   * ignore: 排除
+   */
+  async upload(ctx: any) {
+    if (!ctx.from) throw new Error("请指定上传文件");
 
-      console.log("上传: ", options.Key, "https://" + data.Location);
-    },
-  });
-};
+    const cos = this.client;
+    const files = glob.sync(ctx.from, {
+      nodir: true,
+    });
 
-export const search = async (ctx: any) => {
-  const cos = createClient();
-  cos.getBucket(
-    {
-      ...getCosSetting(ctx),
-      Prefix: ctx.file,
-    },
-    console.log
-  );
-};
+    if (!files.length) throw new Error("文件不存在");
+
+    return new Promise((resolve, reject) => {
+      cos.uploadFiles({
+        files: files.map((file) => ({
+          ...getCosSetting(ctx),
+          Key: path.join(ctx.prefix, file),
+          FilePath: file,
+        })),
+        onFileFinish: function (err: any, data: any, options: any) {
+          if (err) {
+            console.log(err, data);
+            reject();
+            return;
+          }
+          console.log("上传: ", options.Key.replace(ctx.prefix, ""));
+        },
+        onProgress(info: any) {
+          if (info.percent == 1) {
+            resolve(info);
+          }
+        },
+      });
+    });
+  }
+
+  async search(ctx: any) {
+    const cos = this.client;
+    cos.getBucket(
+      {
+        ...getCosSetting(ctx),
+        Prefix: ctx.file,
+      },
+      console.log
+    );
+  }
+}

@@ -118,6 +118,13 @@ export `fl tool cos | xargs`
 fl qr --port 8080
 ```
 
+### SPA 平台
+
+```
+fl spa deploy --from dist/web --tag ${BRANCH} --target dev --matchUrl fd.doctorwork.com
+fl spa mashup --name HIS聚合系统
+```
+
 ## 开发
 
 ```

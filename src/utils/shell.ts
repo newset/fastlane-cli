@@ -1,5 +1,6 @@
 const util = require("util");
 const path = require("path");
+const tar = require("tar");
 const promisify = util.promisify;
 
 export const spawn = async (file: string) => {
@@ -20,3 +21,5 @@ export const exec = async (code: string, opts: any) => {
     encoding: "utf-8",
   });
 };
+
+export { tar };

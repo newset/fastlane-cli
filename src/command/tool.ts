@@ -5,8 +5,7 @@
  */
 
 import { Argv } from "yargs";
-import { getAuth, upload, search } from "../utils/cdn";
-import { showLocal } from "../utils/qr";
+import { Client, getAuth } from "../utils/cdn";
 const XTOOL_URL = "https://github.com/goingta/xtool";
 
 const script = `
@@ -41,20 +40,25 @@ export const builder = (yargs: Argv) => {
       from: {
         description: "上传目录或文件，使用glob pattern",
       },
+      prefix: {
+        description: "上传文件夹前缀",
+        default: "/",
+      },
     });
 };
 
 export const handler = async (argv: Context) => {
-  // brew cask install iterm2
+  const client = new Client();
+
   switch (argv.action) {
     case "cos":
       await getAuth();
       break;
     case "put":
-      await upload(argv);
+      await client.upload(argv);
       break;
     case "search":
-      await search(argv);
+      await client.search(argv);
       break;
     default:
   }
