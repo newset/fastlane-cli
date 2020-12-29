@@ -20,7 +20,8 @@ function getCosSetting(args: any) {
 export const getAuth = async (shell = true) => {
   const url = process.env.COS_TOKEN_URL;
   const { data } = await get(url);
-  const envs = `SecretId=${data.SecretId}\nSecretKey=${data.SecretKey}`;
+
+  const envs = `SecretId=${data.tmpSecretId}\nSecretKey=${data.tmpSecretKey}`;
   if (shell) {
     console.log(envs);
   }
@@ -72,8 +73,9 @@ export class Client {
    * 上传内容 - /结尾表示文件夹
    * prefix: /
    * ignore: 排除
+   * @return files 文件列表
    */
-  async upload(ctx: any) {
+  async upload(ctx: any): Promise<string[]> {
     if (!ctx.from) throw new Error("请指定上传文件");
 
     const cos = this.client;
@@ -96,11 +98,11 @@ export class Client {
             reject();
             return;
           }
-          console.log("上传: ", options.Key.replace(ctx.prefix, ""));
+          console.log("上传: ", options.Key);
         },
         onProgress(info: any) {
           if (info.percent == 1) {
-            resolve(info);
+            resolve(files);
           }
         },
       });

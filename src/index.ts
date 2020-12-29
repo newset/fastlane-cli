@@ -3,8 +3,6 @@
 // 1. 全参数传入
 // 2. 问答模式
 import yargs from "yargs";
-require("pretty-error").start();
-// .skip(() => true);
 
 // 注册命令
 const fl: any = yargs

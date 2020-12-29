@@ -5,10 +5,10 @@
 
 import { Argv } from "yargs";
 import { tar } from "../utils/shell";
-import { md5, generateId } from "../utils";
+import { md5 } from "../utils";
 import { Client } from "../utils/cdn";
-import { createReadStream } from "fs";
-import { assert } from "console";
+import { post } from "../utils/net";
+const assert = require("assert").strict;
 const fs = require("fs-extra");
 
 export const command = "spa [action]";
@@ -18,6 +18,8 @@ export const desc = "SPA平台";
 type SPACommand = Argv & {
   from: string;
   cos: string;
+  bucket: string;
+  region: string;
 };
 
 export const builder = (yargs: Argv) => {
@@ -32,7 +34,18 @@ export const builder = (yargs: Argv) => {
     },
     cos: {
       type: "string",
+      choices: ["env", "temp"],
       default: "env",
+    },
+    region: {
+      type: "string",
+      desc: "CDN区域",
+      default: process.env.BUCKET_REGION,
+    },
+    bucket: {
+      type: "string",
+      desc: "CDN bucket名称",
+      default: process.env.BUCKET,
     },
   });
 };
@@ -40,23 +53,26 @@ export const builder = (yargs: Argv) => {
 async function sendFiles(args: SPACommand) {
   const tarball = tar.c({ sync: true }, [args.from]).read();
   const hash = md5(tarball);
-  const name = fs.readJsonSync("./package.json").name;
+  const name: string = fs.readJsonSync("./package.json").name;
 
   const client = new Client(args.cos);
-  await client.upload({
+  const files = await client.upload({
     from: `${args.from}/**`,
-    bucket: "sd-1257217952",
-    region: "ap-nanjing",
+    bucket: args.bucket,
+    region: args.region,
     prefix: `${name}/${hash}`,
   });
   console.log("上传成功: ", hash);
+  return { hash, name, files };
 }
 
-async function deploy(hash: string, app: string) {
-  const tag = process.env.BRANCH;
-  assert(tag, "分支变量BRANCH不能为空");
-}
+async function deploy(name: string, hash: string, files: string[]) {}
 
 export async function handler(args: SPACommand) {
-  await sendFiles(args);
+  assert(process.env.BRANCH, "分支变量BRANCH不能为空");
+  assert(process.env.SPA_CONSOLE, "接口地址变量SPA_CONSOLE不能为空");
+
+  const { hash, name, files } = await sendFiles(args);
+
+  await deploy(name, hash, files);
 }

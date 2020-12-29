@@ -6,13 +6,6 @@
 
 import { Argv } from "yargs";
 import { Client, getAuth } from "../utils/cdn";
-const XTOOL_URL = "https://github.com/goingta/xtool";
-
-const script = `
-git clone ${XTOOL_URL} --depth 1 .temp/xtool
-cd .temp/xtool
-sh setup.sh
-`;
 
 type Context = Argv & {
   action?: string;
@@ -29,16 +22,18 @@ export const builder = (yargs: Argv) => {
     })
     .options({
       region: {
+        default: process.env.BUCKET_REGION,
         description: "cos region",
       },
       bucket: {
         description: "cos bucket",
-        default: "public-10000230",
+        default: process.env.BUCKET, //"public-10000230",
         defaultDescription:
           "'public-10000230', 'files-10000230', 'js-10000230', 'private-10000230'",
       },
       from: {
         description: "上传目录或文件，使用glob pattern",
+        default: "dist",
       },
       prefix: {
         description: "上传文件夹前缀",

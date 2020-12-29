@@ -120,6 +120,12 @@ fl qr --port 8080
 
 ### SPA 平台
 
+该命令依赖 SPA 平台, 以环境变量形式设定平台地址
+
+export SPA_CONSOLE=http://console.example.com/api
+export BUCKET=public-10000230
+export BUCKET_REGION=ap-shanghai
+
 ```
 fl spa deploy --from dist/web --tag ${BRANCH} --target dev --matchUrl fd.doctorwork.com
 fl spa mashup --name HIS聚合系统

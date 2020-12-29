@@ -16,4 +16,9 @@ const get = (url: string): Promise<any> =>
     https.get(url, handle(resolve));
   }).then(JSON.parse);
 
-export { get };
+const post = (url: string): Promise<any> =>
+  new Promise((resolve) => {
+    https.post(url, handle(resolve));
+  }).then(JSON.parse);
+
+export { get, post };
