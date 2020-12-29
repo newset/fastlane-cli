@@ -104,19 +104,16 @@ fl weapp preview --qr=image
 
 ### 工具集 Tool
 
+- 获取 COS token
+- 显示端口地址二维码
+
 ```
 export `fl tool cos | xargs`
+
+fl tool qr --port 8000
 ```
 
 - 根据`COS_TOKEN_URL`获取 cos token
-
-### 二维码工具
-
-根据端口显示当前 IP 对应端口二维码, 默认端口 80
-
-```
-fl qr --port 8080
-```
 
 ### SPA 平台
 
@@ -127,7 +124,11 @@ export BUCKET=public-10000230
 export BUCKET_REGION=ap-shanghai
 
 ```
+// 上传
+fl spa upload --from lib --cos temp
+// 发布
 fl spa deploy --from dist/web --tag ${BRANCH} --target dev --matchUrl fd.doctorwork.com
+// 添加聚合系统代码
 fl spa mashup --name HIS聚合系统
 ```
 
