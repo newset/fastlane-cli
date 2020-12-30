@@ -1,4 +1,5 @@
 const https = require("https");
+import request from "umi-request";
 import { ServerResponse } from "http";
 
 const handle = (resolve: any) => {
@@ -16,9 +17,9 @@ const get = (url: string): Promise<any> =>
     https.get(url, handle(resolve));
   }).then(JSON.parse);
 
-const post = (url: string): Promise<any> =>
+const post = (url: string, options: any): Promise<any> =>
   new Promise((resolve) => {
     https.post(url, handle(resolve));
   }).then(JSON.parse);
 
-export { get, post };
+export { get, post, request };

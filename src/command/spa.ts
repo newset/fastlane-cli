@@ -7,7 +7,7 @@ import { Argv } from "yargs";
 import { tar } from "../utils/shell";
 import { md5 } from "../utils";
 import { Client } from "../utils/cdn";
-import { post } from "../utils/net";
+
 const assert = require("assert").strict;
 const fs = require("fs-extra");
 

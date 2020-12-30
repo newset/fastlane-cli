@@ -132,6 +132,16 @@ fl spa deploy --from dist/web --tag ${BRANCH} --target dev --matchUrl fd.doctorw
 fl spa mashup --name HIS聚合系统
 ```
 
+### 消息工具
+
+依赖环境变量 ROBOT_URL
+
+- 发送版本更新消息
+
+```
+fl message workwechat
+```
+
 ## 开发
 
 ```
