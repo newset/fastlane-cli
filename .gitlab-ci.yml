@@ -1,0 +1,13 @@
+image: "ccr.ccs.tencentyun.com/xr_base/node:10.20.1"
+build:
+  stage: build
+  only:
+    - tags
+    - master
+  script:
+    - npm i changelog-parser -g
+  after_script:
+    - sh ./shell/deploy.sh
+
+stages:
+  - build
