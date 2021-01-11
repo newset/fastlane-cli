@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.12...v1.5.0) (2021-01-11)
+
+### Features
+
+- add shell/deploy ([41f6740](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/41f67401ff5d79832dd30c5276c23e4a65c3130a))
+- spa 上传完成 ([1e57c7a](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/1e57c7a3fc8aee570ea9282eab97b03c9ad6a658))
+- 完善文件上传功能 ([2d33acf](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/2d33acfe1291cdaca46b97373c36145de181a1a7))
+- 添加 spa 上传命令 ([fafbcfe](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/fafbcfe9eb3ecf481783cfd8197c02bee2c6b572))
+- 添加 spa 命令 ([7f2f95f](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/7f2f95fd36fe58985f82c3adef74af094f1f299c))
+- 添加并行执行限制 ([c8d435b](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/c8d435bd3ee38885972b0a686bb04700c24ce83f))
+- 添加消息工具 ([22ff392](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/22ff392415127a951500a470b6b2c812e4f025d1))
+
 ## [1.4.13](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.12...v1.4.13) (2020-12-30)
 
 ### Features
