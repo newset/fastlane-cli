@@ -1,5 +1,13 @@
 const https = require("https");
+import request, {
+  RequestResponse,
+  RequestOptionsInit,
+  ResponseError,
+} from "umi-request";
 import { ServerResponse } from "http";
+
+// interface R
+
 const handle = (resolve: any) => {
   return (res: ServerResponse) => {
     const data: Uint8Array[] = [];
@@ -10,9 +18,16 @@ const handle = (resolve: any) => {
   };
 };
 
-const get = (url: string): Promise<any> =>
-  new Promise((resolve) => {
-    https.get(url, handle(resolve));
-  }).then(JSON.parse);
+const get = request.get;
 
-export { get };
+const post = function (
+  url: string,
+  options: RequestOptionsInit
+): Promise<RequestResponse> {
+  return request.post(url, options).catch((error: ResponseError) => {
+    console.log("[Request Error]", error.message, error.data);
+    return error;
+  });
+};
+
+export { get, post, request };

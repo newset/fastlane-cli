@@ -5,9 +5,9 @@ build:
     - tags
     - master
   script:
-    - npm i changelog-parser -g
+    - npm i fastlane-cli -g
   after_script:
-    - sh ./shell/deploy.sh
+    - fl message workwechat
 
 stages:
   - build

@@ -104,18 +104,42 @@ fl weapp preview --qr=image
 
 ### 工具集 Tool
 
+- 获取 COS token
+- 显示端口地址二维码
+
 ```
 export `fl tool cos | xargs`
+
+fl tool qr --port 8000
 ```
 
 - 根据`COS_TOKEN_URL`获取 cos token
 
-### 二维码工具
+### SPA 平台
 
-根据端口显示当前 IP 对应端口二维码, 默认端口 80
+该命令依赖 SPA 平台, 以环境变量形式设定平台地址
+
+export SPA_CONSOLE=http://console.example.com/api
+export BUCKET=public-10000230
+export BUCKET_REGION=ap-shanghai
 
 ```
-fl qr --port 8080
+// 上传
+fl spa upload --from lib --cos temp
+// 发布
+fl spa deploy --from dist/web --tag ${BRANCH} --target dev --matchUrl fd.doctorwork.com
+// 添加聚合系统代码
+fl spa mashup --name HIS聚合系统
+```
+
+### 消息工具
+
+依赖环境变量 ROBOT_URL
+
+- 发送版本更新消息
+
+```
+fl message workwechat
 ```
 
 ## 开发
@@ -123,3 +147,7 @@ fl qr --port 8080
 ```
 yarn global add "file:$(pwd)/"
 ```
+
+## TODO
+
+- [ ] lint 内容通过单独的仓库进行管理

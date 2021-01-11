@@ -2,7 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.4.12](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.9...v1.4.12) (2020-11-26)
+## [1.5.0](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.12...v1.5.0) (2021-01-11)
+
+### Features
+
+- add shell/deploy ([41f6740](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/41f67401ff5d79832dd30c5276c23e4a65c3130a))
+- spa 上传完成 ([1e57c7a](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/1e57c7a3fc8aee570ea9282eab97b03c9ad6a658))
+- 完善文件上传功能 ([2d33acf](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/2d33acfe1291cdaca46b97373c36145de181a1a7))
+- 添加 spa 上传命令 ([fafbcfe](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/fafbcfe9eb3ecf481783cfd8197c02bee2c6b572))
+- 添加 spa 命令 ([7f2f95f](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/7f2f95fd36fe58985f82c3adef74af094f1f299c))
+- 添加并行执行限制 ([c8d435b](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/c8d435bd3ee38885972b0a686bb04700c24ce83f))
+- 添加消息工具 ([22ff392](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/22ff392415127a951500a470b6b2c812e4f025d1))
+
+## [1.4.13](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.12...v1.4.13) (2020-12-30)
+
+### Features
+
+- 完善文件上传功能 ([2d33acf](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/2d33acfe1291cdaca46b97373c36145de181a1a7))
+- 添加 spa 上传命令 ([fafbcfe](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/fafbcfe9eb3ecf481783cfd8197c02bee2c6b572))
+- 添加 spa 命令 ([7f2f95f](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/7f2f95fd36fe58985f82c3adef74af094f1f299c))
+- 添加并行执行限制 ([c8d435b](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/c8d435bd3ee38885972b0a686bb04700c24ce83f))
+- 添加消息工具 ([22ff392](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/22ff392415127a951500a470b6b2c812e4f025d1))
+
+## [1.4.12](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.9...v1.4.12) (2020-11-26)
 
 ### Features
 
@@ -10,7 +32,7 @@ All notable changes to this project will be documented in this file. See [standa
 - init 命令新增模板分支的选择 ([0502993](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/050299341be52cd0a52deb2041678d92b6af5094))
 - **lint:** lint 扩展 ([6577d17](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/6577d17cdc18bf03625e831a2a69b6fcf60b46de))
 
-### [1.4.11](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.9...v1.4.11) (2020-11-26)
+## [1.4.11](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.9...v1.4.11) (2020-11-26)
 
 ### Features
 
@@ -18,13 +40,13 @@ All notable changes to this project will be documented in this file. See [standa
 - init 命令新增模板分支的选择 ([0502993](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/050299341be52cd0a52deb2041678d92b6af5094))
 - **lint:** lint 扩展 ([6577d17](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/6577d17cdc18bf03625e831a2a69b6fcf60b46de))
 
-### [1.4.9](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.8...v1.4.9) (2020-11-09)
+## [1.4.9](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.8...v1.4.9) (2020-11-09)
 
 ### Bug Fixes
 
 - 添加 es7 boolean 类型申明 ([9dbf5ca](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/9dbf5ca9bafeb0f3be49e70a1fd16c6a24295a8f))
 
-### [1.4.8](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.6...v1.4.8) (2020-11-09)
+## [1.4.8](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.6...v1.4.8) (2020-11-09)
 
 ### Features
 
@@ -32,21 +54,21 @@ All notable changes to this project will be documented in this file. See [standa
 - 添加 weapp -es7 flag ([1bb9e97](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/1bb9e978a40772522f7947be9b8e2107e99792f8))
 - 添加 vue lint 配置 ([8d15f20](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/8d15f2025c0eaa6c25650e5204934af838a0cb96))
 
-### [1.4.7](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.6...v1.4.7) (2020-11-04)
+## [1.4.7](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.6...v1.4.7) (2020-11-04)
 
-### [1.4.6](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.5...v1.4.6) (2020-11-02)
+## [1.4.6](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.5...v1.4.6) (2020-11-02)
 
 ### Features
 
 - 添加小程序上传压缩参数 ([7a883a3](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/7a883a3f23c5b0375c8b4e79062179177dbc0e5d))
 
-### [1.4.5](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.4...v1.4.5) (2020-11-02)
+## [1.4.5](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.4...v1.4.5) (2020-11-02)
 
 ### Bug Fixes
 
 - 修复小程序上传错误 ([9616f59](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/9616f5990a4f32c7e677cdcc7e4d489091a231c1))
 
-### [1.4.4](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.3...v1.4.4) (2020-10-26)
+## [1.4.4](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.3...v1.4.4) (2020-10-26)
 
 ### Features
 
@@ -54,19 +76,19 @@ All notable changes to this project will be documented in this file. See [standa
 - 添加二维码工具 ([3823b2b](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/3823b2b424befacc612307fda023883344acd0a2))
 - 添加二维码工具 ([501dceb](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/501dceb96cc1d58dbf284b30f75c10fa0255fa86))
 
-### [1.4.3](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.2...v1.4.3) (2020-10-15)
+## [1.4.3](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.2...v1.4.3) (2020-10-15)
 
 ### Features
 
 - use homedir to download template ([a2f890c](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/a2f890cedbe2940b210445c743c6fc76238304d2))
 
-### [1.4.2](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.1...v1.4.2) (2020-10-15)
+## [1.4.2](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.1...v1.4.2) (2020-10-15)
 
 ### Bug Fixes
 
 - 修复 create 脚本错误 ([dc6aec8](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/dc6aec88d3b0df05c888579828b6204f7531db45))
 
-### [1.4.1](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.0...v1.4.1) (2020-10-15)
+## [1.4.1](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.0...v1.4.1) (2020-10-15)
 
 ### Features
 
@@ -78,13 +100,13 @@ All notable changes to this project will be documented in this file. See [standa
 
 - 使用远程模板配置 ([934b45a](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/934b45a2b49ed774792e15422046f993156e46e1))
 
-### [1.3.2](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.3.1...v1.3.2) (2020-10-13)
+## [1.3.2](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.3.1...v1.3.2) (2020-10-13)
 
 ### Features
 
 - create, add 支持分支参数 ([e8a8b42](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/e8a8b4240dbef7cf14b6eaf235353066f0410d8e))
 
-### [1.3.1](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.3.0...v1.3.1) (2020-09-25)
+## [1.3.1](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.3.0...v1.3.1) (2020-09-25)
 
 ### Features
 
@@ -161,13 +183,13 @@ All notable changes to this project will be documented in this file. See [standa
 - 修改 ava typescript 配置 ([19b2084](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/19b20846aee6f56a4b545707fa93c20817750a41))
 - 修改编译脚本 ([602e357](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/602e35757d053b2692f7f0010446e4f481fd06b3))
 
-### [0.0.3](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v0.0.2...v0.0.3) (2020-06-17)
+## [0.0.3](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v0.0.2...v0.0.3) (2020-06-17)
 
 ### Features
 
 - 修改项目类型名称 ([7e5476e](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/7e5476e))
 
-### 0.0.2 (2020-06-17)
+## 0.0.2 (2020-06-17)
 
 ### Features
 
