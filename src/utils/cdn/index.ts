@@ -1,7 +1,7 @@
 /**
  * getAuth - 获取 cos token, 依赖环境变量 COS_TOKEN_URL
  */
-import { get } from "./net";
+import { get } from "../net";
 const COS = require("cos-nodejs-sdk-v5");
 import glob from "glob";
 const path = require("path");
