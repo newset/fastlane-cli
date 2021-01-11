@@ -1,73 +1,71 @@
-import { load, writeFile, getTemplate } from "../utils";
-import { Argv, CommandBuilder } from "yargs";
-const ora = require("ora");
-const glob = require("glob");
+import scalffold, { getTemplateUrl, createChoices } from "../utils/scaffold";
+import { Argv } from "yargs";
 
-type deprecateOption = (key: string, mssage: string) => void;
-
-type Context = Argv & {
+type CreateContext = {
+  name: string;
   type?: string;
+  // 控制是否在当前目录创建项目，默认为创建到当前目录下name目录
+  cwd?: boolean;
 };
 
-export const builder = (yargs: Context) => {
+export const builder = (yargs: Argv & CreateContext) => {
   return yargs
     .positional("name", {
       description: "项目名称",
     })
     .options({
       type: {
-        choices: [0, 1, 2, "hybrid", "admin", "nodejs", "cli"],
         alias: "t",
+        required: true,
         description: "0-hybrid, 1-admin, 2-nodejs, cli",
       },
-      apiPrefix: {
-        description: "接口前缀",
+      cwd: {
+        description: "是否在当前目录创建项目，默认为创建到当前目录下name目录",
+        type: "boolean",
       },
-      dist: {
-        description: "构建目录",
+      compile: {
+        description: "是否执行编译",
+        type: "boolean",
+        default: true,
+      },
+      interpolate: {
+        description: "template 解析符",
+        default: "<%#([sS]+?)%>",
+        type: "string",
+      },
+      branch: {
+        description: "分支",
       },
     });
 };
 
-export async function handler(context: Context) {
-  const { name, type } = context;
-  ora().start().info(`开始创建${name}项目`);
+export async function handler(context: CreateContext) {
+  const { name, type, cwd = false } = context;
 
-  const dir = await load(
-    getTemplate(name, type, "create"),
-    "下载模板",
-    "模板下载完成"
-  );
-
-  const files: [string] = glob.sync("./**", {
-    cwd: dir,
-    dot: true,
-    nodir: true,
-  });
-
-  console.log("开始生成项目文件: ");
-  const spinner = ora("拷贝文件: ").start();
-  for (let file of files) {
-    try {
-      writeFile(file, { context, dir });
-    } catch (error) {
-      spinner.fail(`fail: ${file}`);
-      console.log(error);
-      return;
-    }
-
-    spinner.succeed(`copy ${file.replace("./", "")}`);
+  let actual = type;
+  if (typeof type === "number") {
+    actual = createChoices[type];
   }
 
-  spinner.stop();
-  console.log("完成");
+  const url = await getTemplateUrl(actual, "create");
+
+  await scalffold(url, !cwd ? name : ".", context);
 }
 
 export const command = "create <name>";
 
 export const desc = "创建项目";
 
-export const deprecateOption = [
+export const deprecated = [
   "type",
-  "0, 1, 2 将在下个版本去除，请使用hybrid, admin ,nodejs",
+  // "0, 1, 2 将在下个版本去除，请使用hybrid, admin ,nodejs",
+  // 已使用问答模式，可以不需要0，1，2了
+  "请使用hybrid, admin, nodejs, cli",
+];
+
+export const deprecatedOptions = [
+  "type",
+  // "0, 1, 2 将在下个版本去除，请使用hybrid, admin ,nodejs",
+  // 已使用问答模式，可以不需要0，1，2了
+  "请使用hybrid, admin, nodejs, cli",
 ];

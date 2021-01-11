@@ -1,13 +1,14 @@
 {
   "name": "fastlane-cli",
-  "version": "0.0.3",
+  "version": "1.4.13",
   "description": "#### 初始化项目",
   "main": "lib/index.js",
   "scripts": {
     "dev": "tsc -w",
-    "build": "tsc",
+    "build": "rm -rf lib && tsc",
     "test": "ava -v",
-    "version": "standard-version",
+    "prepublishOnly": "rm -rf lib && npm run build",
+    "release": "standard-version",
     "prettify": "prettier --write"
   },
   "bin": {
@@ -17,8 +18,10 @@
     "type": "git",
     "url": "git@gitlab.aihaisi.com:qiexr/public-group/fastlane-cli.git"
   },
-  "file": [
-    "lib"
+  "files": [
+    "lib",
+    "shell",
+    "template"
   ],
   "author": "luojie",
   "license": "ISC",
@@ -26,21 +29,30 @@
     "@ava/typescript": "^1.1.1",
     "@commitlint/cli": "^9.1.2",
     "@commitlint/config-conventional": "^9.1.2",
+    "@types/glob": "^7.1.3",
     "@types/node": "^14.0.12",
     "@types/yargs": "^15.0.5",
     "ava": "^3.12.1",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.3.0",
-    "prettier": "^2.1.1",
+    "eslint": "^7.13.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.1",
+    "prettier": "^2.1.2",
     "standard-version": "^9.0.0",
     "typescript": "^3.9.5"
   },
   "dependencies": {
     "args": "^5.0.1",
+    "changelog-parser": "^2.8.0",
+    "cos-nodejs-sdk-v5": "^2.8.2",
     "fs-extra": "^9.0.1",
     "glob": "^7.1.6",
+    "inquirer": "^7.3.3",
+    "ip": "^1.1.5",
     "lodash": "^4.17.15",
+    "miniprogram-ci": "^1.0.83",
     "ora": "^4.0.4",
+    "tar": "^6.0.5",
+    "umi-request": "^1.3.5",
     "yargs": "^15.4.1"
   },
   "ava": {

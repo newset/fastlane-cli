@@ -1,20 +1,23 @@
-import { getTemplateUrl, types } from "../api";
 const ora = require("ora");
 const template = require("lodash/template");
+const crypto = require("crypto");
+import { randomBytes } from "crypto";
 
-const glob = require("glob");
+const chunk = require("lodash/chunk");
 const fs = require("fs");
 const fse = require("fs-extra");
 const path = require("path");
+const os = require("os");
+const { exec } = require("./shell");
+const glob = require("glob");
+const join = path.join;
 
-interface WriterOptions {
+export interface CreateOptions {
   filter?: () => [];
   context: any;
   dir: string;
+  dest: string;
 }
-
-const reg = new RegExp("^./template");
-const cwd = path.resolve(__dirname, "..");
 
 export const load = (promise: any, title: string, done?: string) => {
   const spinner = ora(title).start();
@@ -25,38 +28,104 @@ export const load = (promise: any, title: string, done?: string) => {
   });
 };
 
-export function writeFile(file: string, opts: WriterOptions) {
-  const { filter, context, dir } = opts;
-  // 写入新文件
-  const dest = `./${context.name}`;
-  const original = fs.readFileSync(path.resolve(dir, file)).toString();
-  const compiled = template(original, {
-    variable: "data",
-    interpolate: /<%=([\s\S]+?)%>/g,
-  })(context);
-
-  fse.outputFile(path.join(dest, file), compiled);
+function reservedPath(dir: string, file: string) {
+  return path.join(dir, file);
 }
 
-export async function getTemplate(
-  name: string,
-  type: number | string,
-  handle: string
+type CopySetting = {
+  dir: string;
+  dest: string;
+};
+export function copyFiles(
+  { dir, dest }: CopySetting,
+  context?: any,
+  cb?: (file: string) => void
 ) {
-  // 获取模板
-  const source = getTemplateUrl(type, handle);
-  const templateName = name;
-  const tempDir = path.join(cwd, "template", templateName);
-
-  fse.removeSync(tempDir);
-
-  await new Promise((resolve, reject) => {
-    const command = `git clone git@${source} template/${templateName} --depth 1`;
-    require("child_process").exec(command, { cwd }, (err: any) =>
-      !err ? resolve() : console.log(err)
-    );
+  const files: [string] = glob.sync("./**", {
+    cwd: dir,
+    dot: true,
+    nodir: true,
   });
-  // 删除.git
-  fse.removeSync(path.join(tempDir, ".git"));
+
+  for (let file of files) {
+    // 写入新文件
+    const original = fs.readFileSync(path.resolve(dir, file)).toString();
+    let compiled = original;
+    if (
+      file.match(/(js|ts|jsx|tsx|json|html|yaml|yml.sh)$/) &&
+      context.compile
+    ) {
+      compiled = template(original, {
+        variable: "data",
+        interpolate: new RegExp(context.interpolate),
+      })(context);
+    }
+    fse.outputFile(reservedPath(dest, file), compiled);
+    cb?.(file);
+  }
+}
+
+export async function getTemplate(url: string, branch = "master") {
+  // 获取模板
+  const homedir = os.homedir();
+  const folder = ".fl-template";
+  const name = path.parse(url).name;
+  const tempDir = join(homedir, folder, name);
+  if (fs.existsSync(tempDir)) {
+    fse.removeSync(tempDir);
+  }
+
+  const command = `git clone -b ${branch} git@${url} --depth 1 ${folder}/${name}`;
+  await exec(command, {
+    cwd: homedir,
+  });
   return tempDir;
 }
+
+export const colors = {
+  bright: "\x1B[1m", // 亮色
+  grey: "\x1B[2m", // 灰色
+  italic: "\x1B[3m", // 斜体
+  underline: "\x1B[4m", // 下划线
+  reverse: "\x1B[7m", // 反向
+  hidden: "\x1B[8m", // 隐藏
+  black: "\x1B[30m", // 黑色
+  red: "\x1B[31m", // 红色
+  green: "\x1B[32m", // 绿色
+  yellow: "\x1B[33m", // 黄色
+  blue: "\x1B[34m", // 蓝色
+  magenta: "\x1B[35m", // 品红
+  cyan: "\x1B[36m", // 青色
+  white: "\x1B[37m", // 白色
+  blackBG: "\x1B[40m", // 背景色为黑色
+  redBG: "\x1B[41m", // 背景色为红色
+  greenBG: "\x1B[42m", // 背景色为绿色
+  yellowBG: "\x1B[43m", // 背景色为黄色
+  blueBG: "\x1B[44m", // 背景色为蓝色
+  magentaBG: "\x1B[45m", // 背景色为品红
+  cyanBG: "\x1B[46m", // 背景色为青色
+  whiteBG: "\x1B[47m", // 背景色为白色
+};
+
+export function generateId(): string {
+  return randomBytes(4).toString("hex");
+}
+
+export function md5(str: string, length = 16): string {
+  const hash = crypto.createHash("md5").update(str).digest("hex");
+  if (length === 16) {
+    return hash.substr(8, 16);
+  }
+  return hash;
+}
+
+export const limit = async function <T>(iterable: T[], count = 3) {
+  return await chunk(iterable, count).reduce((pre: Promise<T[]>, cur: T[]) => {
+    return pre.then((last) => {
+      return Promise.all(cur.map((item: any) => item())).then((data) => [
+        ...last,
+        ...data,
+      ]);
+    });
+  }, Promise.resolve([]));
+};

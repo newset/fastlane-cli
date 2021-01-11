@@ -1,6 +1,6 @@
 const test = require("ava");
 const yargs = require("yargs");
-const subpackage = require("../lib/command/subpackage");
+const weapp = require("../lib/command/weapp");
 const noop = () => {};
 
 test("create 参数测试", (t) => {
@@ -12,8 +12,9 @@ test("create 参数测试", (t) => {
 
 test("subpackage 参数", (t) => {
   const sub = yargs
-    .command({ ...subpackage, handler: noop })
-    .parse("subpackage sso --dest=module");
+    .command({ ...weapp, handler: noop })
+    .parse("weapp add sso --dest=module --branch=develop");
   t.is(sub.name, "sso");
   t.is(sub.dest, "module");
+  t.is(sub.branch, "develop");
 });
