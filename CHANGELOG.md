@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.5.0...v1.5.1) (2021-01-12)
+
+### Features
+
+- 优化 cdn 上传参数和 hash 文件 ([f09f2e4](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/f09f2e40b7e8515133c7c4cc745342dccb39a2c0))
+
 ## [1.5.0](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.4.12...v1.5.0) (2021-01-11)
 
 ### Features
