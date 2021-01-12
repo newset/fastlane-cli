@@ -76,11 +76,12 @@ export class Client {
    * @return files 文件列表
    */
   async upload(ctx: any): Promise<string[]> {
-    if (!ctx.from) throw new Error("请指定上传文件");
+    if (!ctx.files) throw new Error("请指定上传文件");
 
     const cos = this.client;
-    const files = glob.sync(ctx.from, {
+    const files = glob.sync(ctx.files, {
       nodir: true,
+      cwd: ctx.from,
     });
 
     if (!files.length) throw new Error("文件不存在");
@@ -90,7 +91,7 @@ export class Client {
         files: files.map((file) => ({
           ...getCosSetting(ctx),
           Key: path.join(ctx.prefix, file),
-          FilePath: file,
+          FilePath: path.join(ctx.from, file),
         })),
         onFileFinish: function (err: any, data: any, options: any) {
           if (err) {

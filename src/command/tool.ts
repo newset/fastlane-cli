@@ -3,6 +3,8 @@
  * COS_TOKEN_URL : 获取cos 临时token 的服务
  * COS_APP_ID: COS bucket对应的APP_ID
  * fl tool qr --port 8000
+ * fl tool put --files package.json
+ * fl tool put --files ** --from dist
  */
 
 import { Argv } from "yargs";
@@ -11,6 +13,7 @@ import { showLocal } from "../utils/qr";
 
 type Context = Argv & {
   action?: string;
+  auth?: string;
 };
 
 export const command = "tool <action>";
@@ -35,17 +38,27 @@ export const builder = (yargs: Argv) => {
       },
       from: {
         description: "上传目录或文件，使用glob pattern",
-        default: "dist/**",
+        default: ".",
+      },
+      files: {
+        type: "string",
+        description: "文件glob表达式",
+        default: "**",
       },
       prefix: {
         description: "上传文件夹前缀",
         default: "/",
       },
+      auth: {
+        type: "string",
+        choices: ["env", "temp"],
+        default: "temp",
+      },
     });
 };
 
 export const handler = async (argv: Context) => {
-  const client = new Client();
+  const client = new Client(argv.auth);
 
   switch (argv.action) {
     case "cos":

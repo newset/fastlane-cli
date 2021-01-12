@@ -27,6 +27,7 @@ type SPACommand = Argv & {
   url: string;
   tag: string;
   target: string;
+  files?: string;
 };
 
 export const builder = (yargs: Argv) => {
@@ -43,6 +44,11 @@ export const builder = (yargs: Argv) => {
       type: "string",
       choices: ["env", "temp"],
       default: "env",
+    },
+    files: {
+      type: "string",
+      description: "文件glob表达式",
+      default: "**",
     },
     region: {
       type: "string",
@@ -97,20 +103,23 @@ async function sendFiles(args: SPACommand) {
 
   const client = new Client(args.cos);
   await client.upload({
-    from: `${args.from}/**`,
+    from: args.from,
+    files: args.files,
     bucket: args.bucket,
     region: args.region,
     prefix: `${name}/${hash}`,
   });
   console.log("上传成功: ", hash);
+  fs.writeFile("fl.build.txt", hash, "utf-8");
   return { hash };
 }
 
 async function deploy(hash: string, args: SPACommand) {
   const url = process.env.SPA_CONSOLE;
   const { name: app, version } = getPkg();
-  const files = glob.sync(args.from + "/**", {
+  const files = glob.sync(args.files, {
     nodir: true,
+    cwd: args.from,
   });
 
   // todo: commit, changes
