@@ -1,5 +1,7 @@
 /**
- * fl spa deploy --from dist/web --tag ${BRANCH} --target dev --url /fd web1.ex.com/fd web2.ex.com/fd
+ * fl spa upload --from dist/web
+ * fl spa publish --from dist/web --target dev --url web2.ex.com/fd
+ * fl spa deploy --from dist/web --target dev --url web2.ex.com/fd
  * fl spa mashup --name HIS聚合系统
  */
 
@@ -20,6 +22,7 @@ export const command = "spa [action]";
 export const desc = "SPA平台";
 
 type SPACommand = Argv & {
+  action: string;
   from: string;
   cos: string;
   bucket: string;
@@ -34,7 +37,7 @@ export const builder = (yargs: Argv) => {
   return yargs.options({
     action: {
       type: "string",
-      choices: ["upload", "deploy", "mashup"],
+      choices: ["upload", "deploy", "publish", "mashup"],
     },
     from: {
       type: "string",
@@ -79,6 +82,8 @@ function getIndexHtml(from: string) {
   return fs.readFileSync(path.join(from, "index.html"), "utf-8");
 }
 
+const url = process.env.SPA_CONSOLE;
+
 async function getLastCommit(variables: any) {
   const { bundles }: any = await post("/api/graphiql", {
     data: {
@@ -96,32 +101,12 @@ async function getLastCommit(variables: any) {
   return bundles[0];
 }
 
-async function sendFiles(args: SPACommand) {
-  const tarball = tar.c({ sync: true }, [args.from]).read();
-  const hash = md5(tarball);
-  const { name } = getPkg();
-
-  const client = new Client(args.cos);
-  await client.upload({
-    from: args.from,
-    files: args.files,
-    bucket: args.bucket,
-    region: args.region,
-    prefix: `${name}/${hash}`,
-  });
-  console.log("上传成功: ", hash);
-  fs.writeFile("fl.build.txt", hash, "utf-8");
-  return { hash };
-}
-
-async function deploy(hash: string, args: SPACommand) {
-  const url = process.env.SPA_CONSOLE;
+async function createBundle(hash: string, args: any) {
   const { name: app, version } = getPkg();
   const files = glob.sync(args.files, {
     nodir: true,
     cwd: args.from,
   });
-
   // todo: commit, changes
   const commit = run("git rev-parse HEAD");
   const changes = run("git log -1 --format=%s | cat");
@@ -143,6 +128,47 @@ async function deploy(hash: string, args: SPACommand) {
   });
 
   console.log("[bundle]: ", bundle.id);
+  return bundle;
+}
+
+const BUILD_FILENAME = "fl.build.txt";
+
+async function upload(args: SPACommand) {
+  const tarball = tar.c({ sync: true }, [args.from]).read();
+  const hash = md5(tarball);
+  const { name } = getPkg();
+
+  const client = new Client(args.cos);
+  await client.upload({
+    from: args.from,
+    files: args.files,
+    bucket: args.bucket,
+    region: args.region,
+    prefix: `${name}/${hash}`,
+  });
+  console.log("上传成功: ", hash);
+  await createBundle(hash, args);
+
+  fs.writeFile(BUILD_FILENAME, hash, "utf-8");
+}
+
+async function deploy(args: SPACommand) {
+  if (!fs.existsSync(BUILD_FILENAME)) {
+    return;
+  }
+  const { name: app } = getPkg();
+  const hash = fs.readFileSync(BUILD_FILENAME, "utf-8");
+  const [bundle] = await post("/api/graphiql", {
+    prefix: url,
+    data: {
+      query: `
+    query($hash: String!){bundles(where: {hash: {_eq: $hash}}) {
+      id
+    }}
+  `,
+      variables: { hash },
+    },
+  }).then((res: any) => res.bundles);
 
   await post("/api/deployBundle", {
     prefix: url,
@@ -153,12 +179,24 @@ async function deploy(hash: string, args: SPACommand) {
       target: args.target,
     },
   });
+
+  console.log("[spa] 发布成功: ", bundle.id, hash);
 }
 
 export async function handler(args: SPACommand) {
   assert(process.env.SPA_CONSOLE, "接口地址变量SPA_CONSOLE不能为空");
 
-  const { hash } = await sendFiles(args);
-
-  await deploy(hash, args);
+  switch (args.action) {
+    case "upload":
+      await upload(args);
+      break;
+    case "publish":
+      await deploy(args);
+      break;
+    case "deploy":
+      await upload(args);
+      await deploy(args);
+      break;
+    default:
+  }
 }
