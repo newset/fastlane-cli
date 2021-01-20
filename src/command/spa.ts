@@ -7,7 +7,7 @@
 
 import { Argv } from "yargs";
 import { tar } from "../utils/shell";
-import { md5 } from "../utils";
+import { md5, getPkg } from "../utils";
 import { Client } from "../utils/cdn";
 import { post } from "../utils/net";
 import glob from "glob";
@@ -72,11 +72,6 @@ export const builder = (yargs: Argv) => {
     },
   });
 };
-
-function getPkg() {
-  const pkg: any = fs.readJsonSync("./package.json");
-  return pkg;
-}
 
 function getIndexHtml(from: string) {
   return fs.readFileSync(path.join(from, "index.html"), "utf-8");

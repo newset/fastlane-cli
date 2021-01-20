@@ -129,3 +129,7 @@ export const limit = async function <T>(iterable: T[], count = 3) {
     });
   }, Promise.resolve([]));
 };
+
+export const getPkg = () => {
+  return fse.readJsonSync("./package.json");
+};

@@ -10,6 +10,9 @@
 import { Argv } from "yargs";
 import { Client, getAuth } from "../utils/cdn";
 import { showLocal } from "../utils/qr";
+import { getPkg } from "../utils";
+const path = require("path");
+const fs = require("fs-extra");
 
 type Context = Argv & {
   action?: string;
@@ -21,40 +24,51 @@ export const command = "tool <action>";
 export const desc = "其他工具";
 
 export const builder = (yargs: Argv) => {
-  return yargs
-    .positional("action", {
-      choices: ["cos", "put", "search", "qr"],
-    })
-    .options({
-      region: {
-        default: process.env.BUCKET_REGION,
-        description: "cos region",
-      },
-      bucket: {
-        description: "cos bucket",
-        default: process.env.BUCKET, //"public-10000230",
-        defaultDescription:
-          "'public-10000230', 'files-10000230', 'js-10000230', 'private-10000230'",
-      },
-      from: {
-        description: "上传目录或文件，使用glob pattern",
-        default: ".",
-      },
-      files: {
-        type: "string",
-        description: "文件glob表达式",
-        default: "**",
-      },
-      prefix: {
-        description: "上传文件夹前缀",
-        default: "/",
-      },
-      auth: {
-        type: "string",
-        choices: ["env", "temp"],
-        default: "temp",
-      },
-    });
+  const pkg = getPkg();
+  const prefix = pkg?.name || path.basename(__dirname);
+
+  return (
+    yargs
+      .positional("action", {
+        choices: ["cos", "put", "search", "qr"],
+      })
+      .options({
+        region: {
+          default: process.env.BUCKET_REGION,
+          description: "cos region",
+        },
+        bucket: {
+          description: "cos bucket",
+          default: process.env.BUCKET, //"public-10000230",
+          defaultDescription:
+            "'public-10000230', 'files-10000230', 'js-10000230', 'private-10000230'",
+        },
+        from: {
+          description: "上传目录或文件，使用glob pattern",
+          default: "dist",
+        },
+        files: {
+          type: "string",
+          description: "文件glob表达式",
+          default: "**",
+        },
+        prefix: {
+          description: "上传文件夹前缀",
+          type: "string",
+          default: prefix,
+        },
+        auth: {
+          type: "string",
+          choices: ["env", "temp"],
+          default: "temp",
+        },
+      })
+      // 文件夹必须不能使用根目录
+      .check((argv) => {
+        if (argv.prefix === "/") return false;
+        return true;
+      })
+  );
 };
 
 export const handler = async (argv: Context) => {
