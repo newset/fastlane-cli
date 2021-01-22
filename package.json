@@ -1,6 +1,6 @@
 {
   "name": "fastlane-cli",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "#### 初始化项目",
   "main": "lib/index.js",
   "scripts": {

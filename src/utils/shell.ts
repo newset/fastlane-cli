@@ -1,6 +1,5 @@
 const util = require("util");
 const path = require("path");
-const tar = require("tar");
 const promisify = util.promisify;
 const { execSync } = require("child_process");
 
@@ -26,5 +25,3 @@ export const exec = async (code: string, opts: any) => {
 export const run = (command: string) => {
   return execSync(command).toString().trim();
 };
-
-export { tar };
