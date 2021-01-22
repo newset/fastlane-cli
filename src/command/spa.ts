@@ -6,13 +6,13 @@
  */
 
 import { Argv } from "yargs";
-import { tar } from "../utils/shell";
-import { md5, getPkg } from "../utils";
+import { getPkg } from "../utils";
 import { Client } from "../utils/cdn";
 import { post } from "../utils/net";
 import glob from "glob";
 const path = require("path");
 const { run } = require("../utils/shell");
+const { hashElement } = require("folder-hash");
 
 const assert = require("assert").strict;
 const fs = require("fs-extra");
@@ -123,16 +123,21 @@ async function createBundle(hash: string, args: any) {
   });
 
   console.log("[bundle]: ", bundle.id);
-  return bundle;
 }
 
 const BUILD_FILENAME = "fl.build.txt";
 
 async function upload(args: SPACommand) {
-  const tarball = tar.c({ sync: true }, [args.from]).read();
-  const hash = md5(tarball);
+  const elem = await hashElement(args.from, {
+    include: [args.files],
+    encoding: "hex",
+  });
+
+  const hash = elem.hash.substr(8, 16);
+
   const { name } = getPkg();
 
+  await createBundle(hash, args);
   const client = new Client(args.cos);
   await client.upload({
     from: args.from,
@@ -142,8 +147,6 @@ async function upload(args: SPACommand) {
     prefix: `${name}/${hash}`,
   });
   console.log("上传成功: ", hash);
-  await createBundle(hash, args);
-
   fs.writeFile(BUILD_FILENAME, hash, "utf-8");
 }
 

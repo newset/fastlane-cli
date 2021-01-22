@@ -4,9 +4,6 @@ import request, {
   RequestOptionsInit,
   ResponseError,
 } from "umi-request";
-import { ServerResponse } from "http";
-
-// interface R
 
 const get = request.get;
 
@@ -14,13 +11,10 @@ const post = function (
   url: string,
   options: RequestOptionsInit
 ): Promise<RequestResponse> {
-  return request
-    .post(url, options)
-    .then((res) => res.data)
-    .catch((error: ResponseError) => {
-      console.log("[Request Error]", error.message, error.data);
-      return error;
-    });
+  return request.post(url, options).catch((error: ResponseError) => {
+    console.log("[Request Error]", error.message, error.data);
+    return Promise.reject();
+  });
 };
 
 export { get, post, request };

@@ -11,9 +11,12 @@ export const buckets = {
 };
 
 function getCosSetting(args: any) {
+  const region = args.region || "ap-shanghai";
+  const [Bucket, Region = region] = args.bucket.split(":");
+
   return {
-    Bucket: args.bucket,
-    Region: args.region || "ap-shanghai",
+    Bucket,
+    Region,
   };
 }
 
