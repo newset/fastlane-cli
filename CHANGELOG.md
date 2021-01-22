@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.2](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.5.1...v1.5.2) (2021-01-22)
+
+### Features
+
+- spa 命令拆分 ([25867c0](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/25867c0ae0e24c7061f5980fc5f3dc0301c0e91c))
+- 修改默认 prefix 值 ([8a9f07c](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/8a9f07c64183e23fd84127aee82eac1dbe0945ab))
+
+### Bug Fixes
+
+- 修改 hash 算法 ([3e85aa3](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/3e85aa3561660af46258edb645fe49093a7f7197))
+
 ## [1.5.1](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.5.0...v1.5.1) (2021-01-12)
 
 ### Features
