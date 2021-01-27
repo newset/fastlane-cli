@@ -39,11 +39,12 @@ export const createTempClient = () => {
     FileParallelLimit: 5,
     getAuthorization: async (_: any, callback: any) => {
       const data = await getAuth(false);
+      const ExpiredTime = (data.expiration / 1000) | 0;
       callback({
         TmpSecretId: data.tmpSecretId, // 临时密钥的 tmpSecretId
         TmpSecretKey: data.tmpSecretKey, // 临时密钥的 tmpSecretKey
         XCosSecurityToken: data.sessionToken,
-        ExpiredTime: data.expiration,
+        ExpiredTime,
       });
     },
   });
