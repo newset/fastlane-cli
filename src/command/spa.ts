@@ -17,6 +17,17 @@ const { hashElement } = require("folder-hash");
 const assert = require("assert").strict;
 const fs = require("fs-extra");
 
+const url = process.env.SPA_CONSOLE;
+const graphiql = (query: string, variables: any) => {
+  return post("/api/graphiql", {
+    prefix: url,
+    data: {
+      query,
+      variables,
+    },
+  }).then((res) => res.data);
+};
+
 export const command = "spa [action]";
 
 export const desc = "SPA平台";
@@ -77,12 +88,9 @@ function getIndexHtml(from: string) {
   return fs.readFileSync(path.join(from, "index.html"), "utf-8");
 }
 
-const url = process.env.SPA_CONSOLE;
-
 async function getLastCommit(variables: any) {
-  const { bundles }: any = await post("/api/graphiql", {
-    data: {
-      query: `
+  const { bundles }: any = await graphiql(
+    `
       query ($app: String, $tag: String) {
         bundles(where: {app: {_eq: $app}, tag: {_eq: $tag}}, order_by: {date: desc}, limit: 1) {
           id
@@ -90,9 +98,8 @@ async function getLastCommit(variables: any) {
         }
       }
     `,
-      variables,
-    },
-  });
+    variables
+  );
   return bundles[0];
 }
 
@@ -156,17 +163,14 @@ async function deploy(args: SPACommand) {
   }
   const { name: app } = getPkg();
   const hash = fs.readFileSync(BUILD_FILENAME, "utf-8");
-  const [bundle] = await post("/api/graphiql", {
-    prefix: url,
-    data: {
-      query: `
+  const [bundle] = await graphiql(
+    `
     query($hash: String!){bundles(where: {hash: {_eq: $hash}}) {
       id
     }}
   `,
-      variables: { hash },
-    },
-  }).then((res: any) => res.bundles);
+    { hash }
+  ).then((res: any) => res.bundles);
 
   await post("/api/deployBundle", {
     prefix: url,
