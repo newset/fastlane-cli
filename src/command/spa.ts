@@ -154,7 +154,7 @@ async function upload(args: SPACommand) {
     prefix: `${name}/${hash}`,
   });
   console.log("上传成功: ", hash);
-  fs.writeFile(BUILD_FILENAME, hash, "utf-8");
+  fs.writeFileSync(BUILD_FILENAME, hash, "utf-8");
 }
 
 async function deploy(args: SPACommand) {
