@@ -65,6 +65,11 @@ export function copyFiles(
   }
 }
 
+export const gitCommand = (url: string) => {
+  const git = url.match(/^(\w+@|https?)/) ? url : `git@${url}`;
+  return `git clone ${git} --depth 1`;
+};
+
 export async function getTemplate(url: string, branch = "master") {
   // 获取模板
   const homedir = os.homedir();
@@ -75,7 +80,8 @@ export async function getTemplate(url: string, branch = "master") {
     fse.removeSync(tempDir);
   }
 
-  const command = `git clone -b ${branch} git@${url} --depth 1 ${folder}/${name}`;
+  const command = `${gitCommand(url)} -b ${branch} ${folder}/${name}`;
+  console.log(url, command);
   await exec(command, {
     cwd: homedir,
   });
