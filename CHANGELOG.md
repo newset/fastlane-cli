@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.7](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.5.6...v1.5.7) (2021-03-23)
+
+### Bug Fixes
+
+- optmize shell command std ([8a0e288](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/commit/8a0e2887813bf49e03948fcdddabf346bd7b4a98))
+
 ## [1.5.6](https://gitlab.aihaisi.com/qiexr/public-group/fastlane-cli/compare/v1.5.1...v1.5.6) (2021-03-18)
 
 ### Features
