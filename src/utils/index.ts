@@ -81,7 +81,7 @@ export async function getTemplate(url: string, branch = "master") {
   }
 
   const command = `${gitCommand(url)} -b ${branch} ${folder}/${name}`;
-  console.log(url, command);
+
   await exec(command, {
     cwd: homedir,
   });

@@ -13,9 +13,7 @@ export const spawn = async (file: string) => {
 };
 
 export const exec = async (code: string, opts: any) => {
-  const run = promisify(require("child_process").exec);
-
-  await run(code, {
+  execSync(code, {
     ...opts,
     stdio: ["pipe", process.stdout, process.stderr],
     encoding: "utf-8",
